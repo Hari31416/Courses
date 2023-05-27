@@ -1,0 +1,13 @@
+Big_Data/UCSD4/big-data-4/minute_weather.csv filter=lfs diff=lfs merge=lfs -text
+MLS/C3/W2/Assignment/A1/data/small_movies_Y.csv filter=lfs diff=lfs merge=lfs -text
+MLS/C3/W2/Assignment/A2/data/content_user_train.csv filter=lfs diff=lfs merge=lfs -text
+DLS/C2/Assignments/Tensorflow_introduction/datasets/train_signs.h5 filter=lfs diff=lfs merge=lfs -text
+DLS/C4/Assignments/Convolution_model_Application/datasets/train_signs.h5 filter=lfs diff=lfs merge=lfs -text
+MLS/C2/W1/Assignment/data/X.npy filter=lfs diff=lfs merge=lfs -text
+MLS/C2/W2/Assignment/data/X.npy filter=lfs diff=lfs merge=lfs -text
+DLS/C4/Assignments/Car_detection_with_YOLO/nb_images/prediction_video_compressed.mp4 filter=lfs diff=lfs merge=lfs -text
+DLS/C4/Assignments/Car_detection_with_YOLO/nb_images/pred_video.mp4 filter=lfs diff=lfs merge=lfs -text
+DLS/C4/Assignments/Car_detection_with_YOLO/nb_images/road_video.mp4 filter=lfs diff=lfs merge=lfs -text
+DLS/C4/Assignments/Car_detection_with_YOLO/nb_images/road_video_compressed.mp4 filter=lfs diff=lfs merge=lfs -text
+DLS/C4/Assignments/Convolution_model_Application/images/conv_kiank.mp4 filter=lfs diff=lfs merge=lfs -text
+DLS/C4/Assignments/Convolution_model_Application/file.zip filter=lfs diff=lfs merge=lfs -text
