@@ -6,3 +6,9 @@ temp.html
 auto_track_lfs.sh
 populate.sh
 Big_Data
+site
+all_notebooks
+.deploy
+.exclude
+.yml_out
+log

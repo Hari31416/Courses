@@ -1,0 +1,247 @@
+site_name: Courses
+site_url: https://hari31416.github.io/Courses/
+repo_url: https://github.com/Hari31416/Courses
+repo_name: Courses
+site_author: Harikesh Kushwaha
+remote_branch: gh-pages
+site_description: "This is a collection of all the notebooks from various courses I have taken."
+remote_name: origin
+
+theme:
+  name: material
+  logo: assets/ml.png
+  favicon: assets/ml.png
+  features:
+    - navigation.instant
+    - navigation.top
+    - toc.integrate
+  palette:
+    primary: black
+  custom_dir: all_notebooks
+
+markdown_extensions:
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.arithmatex:
+      generic: true
+
+plugins:
+  #   - mkdocs-jupyter:
+  #       include_source: True
+  #       ignore_h1_titles: True
+  - mknotebooks
+  - search
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
+edit_uri: ""
+
+nav:
+  - Home: "index.md"
+
+  - Deep Learning Specialization:
+      - C1:
+          - DLS/C1/Assignments/Building_your_Deep_Neural_Network_Step_by_Step/Building_your_Deep_Neural_Network_Step_by_Step.ipynb
+          - DLS/C1/Assignments/Deep_Neural_Network_-_Application/Deep_Neural_Network_-_Application.ipynb
+          - DLS/C1/Assignments/Logistic_Regression_with_a_Neural_Network_mindset/Logistic_Regression_with_a_Neural_Network_mindset.ipynb
+          - DLS/C1/Assignments/Planar_data_classification_with_one_hidden_layer/Planar_data_classification_with_one_hidden_layer.ipynb
+
+      - C2:
+          - DLS/C2/Assignments/Gradient_Checking/Gradient_Checking.ipynb
+          - DLS/C2/Assignments/Initialization/Initialization.ipynb
+          - DLS/C2/Assignments/Optimization_Methods/Optimization_methods.ipynb
+          - DLS/C2/Assignments/Regularization/Regularization.ipynb
+          - DLS/C2/Assignments/Tensorflow_introduction/Tensorflow_introduction.ipynb
+
+      - C4:
+          - DLS/C4/Assignments/Car_detection_with_YOLO/Autonomous_driving_application_Car_detection.ipynb
+          - DLS/C4/Assignments/Convolution_model_Application/Convolution_model_Application.ipynb
+          - DLS/C4/Assignments/Image_segmentation_Unet/Image_segmentation_Unet_v2.ipynb
+          - DLS/C4/Assignments/Residual_Networks/Residual_Networks.ipynb
+          - DLS/C4/Assignments/Transfer_learning_with_MobileNet/Transfer_learning_with_MobileNet_v1.ipynb
+
+      - C5:
+          - DLS/C5/Assignments/Building_a_Recurrent_Neural_Network_Step_by_Step/Building_a_Recurrent_Neural_Network_Step_by_Step.ipynb
+          - DLS/C5/Assignments/Dinosaurus_Island_Character_level_language_model/Dinosaurus_Island_Character_level_language_model.ipynb
+          - DLS/C5/Assignments/Emojify/Emoji_v3a.ipynb
+          - DLS/C5/Assignments/Improvise_a_Jazz_Solo_with_an_LSTM_Network/Improvise_a_Jazz_Solo_with_an_LSTM_Network_v4.ipynb
+          - DLS/C5/Assignments/Neural_machine_translation_with_attention/Neural_machine_translation_with_attention_v4a.ipynb
+          - DLS/C5/Assignments/Operations_on_Word_Vectors_Debiasing/Operations_on_word_vectors_v2a.ipynb
+
+  - Machine Learning Specialization:
+      - C1:
+          - MLS/C1/W1/Assignments/Gradient_Descent/C1_W1_Lab03_Model_Representation_Soln.ipynb
+          - MLS/C1/W1/Assignments/Gradient_Descent/C1_W1_Lab04_Cost_function_Soln.ipynb
+          - MLS/C1/W1/Assignments/Gradient_Descent/C1_W1_Lab05_Gradient_Descent_Soln.ipynb
+          - MLS/C1/W1/Assignments/Gradient_Descent/betaversion/C1_W1_Lab01_Python_Jupyter_Soln.ipynb
+          - MLS/C1/W1/Assignments/Gradient_Descent/betaversion/C1_W1_Lab02_Course_Preview_Soln.ipynb
+          - MLS/C1/W1/Assignments/Gradient_Descent/betaversion/C1_W1_Lab03_Model_Representation_Soln.ipynb
+          - MLS/C1/W1/Assignments/Gradient_Descent/betaversion/C1_W1_Lab04_Cost_function_Soln.ipynb
+          - MLS/C1/W1/Assignments/Gradient_Descent/betaversion/C1_W1_Lab05_Gradient_Descent_Soln.ipynb
+          - MLS/C1/W1/Notes/Linear_Regression.ipynb
+          - MLS/C1/W1/Notes/Overview.ipynb
+          - MLS/C1/W2/Assignments/C1_W2_Lab01_Python_Numpy_Vectorization_Soln.ipynb
+          - MLS/C1/W2/Assignments/C1_W2_Lab02_Multiple_Variable_Soln.ipynb
+          - MLS/C1/W2/Assignments/C1_W2_Lab03_Feature_Scaling_and_Learning_Rate_Soln.ipynb
+          - MLS/C1/W2/Assignments/C1_W2_Lab04_FeatEng_PolyReg_Soln.ipynb
+          - MLS/C1/W2/Assignments/C1_W2_Lab05_Sklearn_GD_Soln.ipynb
+          - MLS/C1/W2/Assignments/C1_W2_Lab06_Sklearn_Normal_Soln.ipynb
+          - MLS/C1/W2/Assignments/Linear_Regression/C1_W2_Linear_Regression.ipynb
+          - MLS/C1/W3/Assignments/C1_W3_Lab01_Classification_Soln.ipynb
+          - MLS/C1/W3/Assignments/C1_W3_Lab02_Sigmoid_function_Soln.ipynb
+          - MLS/C1/W3/Assignments/C1_W3_Lab03_Decision_Boundary_Soln.ipynb
+          - MLS/C1/W3/Assignments/C1_W3_Lab04_LogisticLoss_Soln.ipynb
+          - MLS/C1/W3/Assignments/C1_W3_Lab05_Cost_Function_Soln.ipynb
+          - MLS/C1/W3/Assignments/C1_W3_Lab07_Scikit_Learn_Soln.ipynb
+          - MLS/C1/W3/Assignments/C1_W3_Lab08_Overfitting_Soln.ipynb
+          - MLS/C1/W3/Assignments/C1_W3_Lab09_Regularization_Soln.ipynb
+
+      - C2:
+          - MLS/C2/W1/Assignment/C2_W1_Assignment.ipynb
+          - MLS/C2/W1/Lab/C2_W1_Lab01_Neurons_and_Layers.ipynb
+          - MLS/C2/W1/Lab/C2_W1_Lab02_CoffeeRoasting_TF.ipynb
+          - MLS/C2/W1/Lab/C2_W1_Lab03_CoffeeRoasting_Numpy.ipynb
+          - MLS/C2/W2/Assignment/C2_W2_Assignment.ipynb
+          - MLS/C2/W2/Lab/C2_W2_Multiclass_TF.ipynb
+          - MLS/C2/W2/Lab/C2_W2_Relu.ipynb
+          - MLS/C2/W2/Lab/C2_W2_SoftMax.ipynb
+          - MLS/C2/W3/Assignment/C2_W3_Assignment.ipynb
+          - MLS/C2/W4/Assignment/C2_W4_Decision_Tree_with_Markdown.ipynb
+
+      - C3:
+          - MLS/C3/W1/Assignment/A1/C3_W1_KMeans_Assignment.ipynb
+          - MLS/C3/W1/Assignment/A2/C3_W1_Anomaly_Detection.ipynb
+          - MLS/C3/W2/Assignment/A1/C3_W2_Collaborative_RecSys_Assignment.ipynb
+          - MLS/C3/W2/Assignment/A2/C3_W2_RecSysNN_Assignment.ipynb
+          - MLS/C3/W3/Assignment/C3_W3_A1_Assignment.ipynb
+          - MLS/C3/W3/Lab/State-action value function example.ipynb
+
+  - TensorFlow Advanced Techniques Specialization:
+      - C1:
+          - TF_Specialization/C1/W1/Labs/C1_W1_Lab_1_functional-practice.ipynb
+          - TF_Specialization/C1/W1/Labs/C1_W1_Lab_2_multi-output.ipynb
+          - TF_Specialization/C1/W1/Labs/C1_W1_Lab_3_siamese-network.ipynb
+          - TF_Specialization/C1/W1/Multiple_Output_Models_using_the_Keras_Functional_API/C1W1_Assignment.ipynb
+          - TF_Specialization/C1/W2/Creating_a_Custom_Loss_Function/C1W2_Assignment.ipynb
+          - TF_Specialization/C1/W2/Labs/C1_W2_Lab_1_huber-loss.ipynb
+          - TF_Specialization/C1/W2/Labs/C1_W2_Lab_2_huber-object-loss.ipynb
+          - TF_Specialization/C1/W3/Implement_a_Quadratic_Layer/C1W3_Assignment.ipynb
+          - TF_Specialization/C1/W3/Labs/C1_W3_Lab_1_lambda-layer.ipynb
+          - TF_Specialization/C1/W3/Labs/C1_W3_Lab_2_custom-dense-layer.ipynb
+          - TF_Specialization/C1/W3/Labs/C1_W3_Lab_3_custom-layer-activation.ipynb
+          - TF_Specialization/C1/W4/Create_a_VGG_network/C1W4_Assignment.ipynb
+          - TF_Specialization/C1/W4/Labs/C1_W4_Lab_1_basic-model.ipynb
+          - TF_Specialization/C1/W4/Labs/C1_W4_Lab_2_resnet-example.ipynb
+
+      - C2:
+          - TF_Specialization/C2/W1/Assignment/C2W1_Assignment.ipynb
+          - TF_Specialization/C2/W1/Labs/C2_W1_Lab_1_basic-tensors.ipynb
+          - TF_Specialization/C2/W1/Labs/C2_W1_Lab_2_gradient-tape-basics.ipynb
+          - TF_Specialization/C2/W2/Assignment/C2W2_Assignment.ipynb
+          - TF_Specialization/C2/W2/Labs/C2_W2_Lab_1_training-basics.ipynb
+          - TF_Specialization/C2/W2/Labs/C2_W2_Lab_2_training-categorical.ipynb
+          - TF_Specialization/C2/W3/Assignment/C2W3_Assignment.ipynb
+          - TF_Specialization/C2/W3/Labs/C2_W3_Lab_1_autograph-basics.ipynb
+          - TF_Specialization/C2/W3/Labs/C2_W3_Lab_2-graphs-for-complex-code.ipynb
+          - TF_Specialization/C2/W4/Assignment/C2W4_Assignment.ipynb
+          - TF_Specialization/C2/W4/Labs/C2_W4_Lab_1_basic-mirrored-strategy.ipynb
+          - TF_Specialization/C2/W4/Labs/C2_W4_Lab_2_multi-GPU-mirrored-strategy.ipynb
+          - TF_Specialization/C2/W4/Labs/C2_W4_Lab_3_using-TPU-strategy.ipynb
+          - TF_Specialization/C2/W4/Labs/C2_W4_Lab_4_one-device-strategy.ipynb
+
+      - C3:
+          - TF_Specialization/C3/W1/Assignment/C3W1_Assignment.ipynb
+          - TF_Specialization/C3/W1/Labs/C3_W1_Lab_2_Transfer_Learning_CIFAR_10.ipynb
+          - TF_Specialization/C3/W1/Labs/C3_W1_Lab_3_Object_Localization.ipynb
+          - TF_Specialization/C3/W2/Assignment/C3W2_Assignment.ipynb
+          - TF_Specialization/C3/W2/Labs/C3_W2_Lab_1_Simple_Object_Detection.ipynb
+          - TF_Specialization/C3/W2/Labs/Object_Detection_Inference_on_TF_2_and_TF_Hub.ipynb
+          - TF_Specialization/C3/W3/Assignment/C3W3_Assignment.ipynb
+          - TF_Specialization/C3/W3/Labs/C3_W3_Lab_1_VGG16_FCN8_CamVid.ipynb
+          - TF_Specialization/C3/W3/Labs/C3_W3_Lab_2_OxfordPets_UNet.ipynb
+          - TF_Specialization/C3/W3/Labs/C3_W3_Lab_3_Mask_RCNN_ImageSegmentation.ipynb
+          - TF_Specialization/C3/W4/Assignment/C3_W4_Assignment.ipynb
+          - TF_Specialization/C3/W4/Labs/C3_W4_Lab_1_FashionMNIST_CAM.ipynb
+          - TF_Specialization/C3/W4/Labs/C3_W4_Lab_2_CatsDogs_CAM.ipynb
+          - TF_Specialization/C3/W4/Labs/C3_W4_Lab_3_Saliency.ipynb
+
+      - C4:
+          - TF_Specialization/C4/W1/Assignment/C4W1_Assignment.ipynb
+          - TF_Specialization/C4/W1/Labs/C4_W1_Lab_1_Neural_Style_Transfer.ipynb
+          - TF_Specialization/C4/W1/Labs/C4_W1_Lab_2_Fast_NST.ipynb
+          - TF_Specialization/C4/W2/Assignment/C4W2_Assignment.ipynb
+          - TF_Specialization/C4/W2/Labs/C4_W2_Lab_1_FirstAutoEncoder.ipynb
+          - TF_Specialization/C4/W2/Labs/C4_W2_Lab_2_MNIST_Autoencoder.ipynb
+          - TF_Specialization/C4/W2/Labs/C4_W2_Lab_3_MNIST_DeepAutoencoder.ipynb
+          - TF_Specialization/C4/W2/Labs/C4_W2_Lab_4_FashionMNIST_CNNAutoEncoder.ipynb
+          - TF_Specialization/C4/W2/Labs/C4_W2_Lab_5_FashionMNIST_NoisyCNNAutoEncoder.ipynb
+          - TF_Specialization/C4/W3/Assignment/C4W3_Assignment.ipynb
+          - TF_Specialization/C4/W3/Labs/C4_W3_Lab_1_VAE_MNIST.ipynb
+          - TF_Specialization/C4/W4/Assignment/C4W4_Assignment.ipynb
+          - TF_Specialization/C4/W4/Labs/C4_W4_Lab_1_First_GAN.ipynb
+          - TF_Specialization/C4/W4/Labs/C4_W4_Lab_2_First_DCGAN.ipynb
+          - TF_Specialization/C4/W4/Labs/C4_W4_Lab_3_CelebA_GAN_Experiments.ipynb
+
+  - Generative Adversarial Networks Specialization:
+      - C1:
+          - GAN/C1/W1/Assignments/C1W1_Your_First_GAN.ipynb
+          - GAN/C1/W1/Labs/Intro_to_PyTorch.ipynb
+          - GAN/C1/W2/Assignments/C1_W2_Assignment.ipynb
+          - GAN/C1/W2/Labs/C1W2_Video_Generation_(Optional).ipynb
+          - GAN/C1/W3/Assignments/C1W3_WGAN_GP.ipynb
+          - GAN/C1/W3/Labs/SNGAN.ipynb
+          - GAN/C1/W4/Assignments/C1W4A_Build_a_Conditional_GAN.ipynb
+          - GAN/C1/W4/Assignments/C1W4B_Controllable_Generation.ipynb
+
+      - C2:
+          - GAN/C2/W1/Assignments/C2W1_Assignment.ipynb
+          - GAN/C2/W1/Labs/PPL.ipynb
+          - GAN/C2/W2/Assignments/C2W2_Assignment.ipynb
+          - GAN/C2/W2/Labs/C2W2_VAE.ipynb
+          - GAN/C2/W3/Assignments/C2W3_Assignment.ipynb
+          - GAN/C2/W3/Labs/BigGAN.ipynb
+          - GAN/C2/W3/Labs/StyleGAN2.ipynb
+
+      - C3:
+          - GAN/C3/W1/Assignments/C3W1_Assignment.ipynb
+          - GAN/C3/W1/Labs/C3W1_Generative_Teaching_Networks_(Optional).ipynb
+          - GAN/C3/W2/Assignments/C3W2A_Assignment.ipynb
+          - GAN/C3/W2/Assignments/C3W2B_Assignment.ipynb
+          - GAN/C3/W2/Labs/C3W2_GauGAN_(Optional).ipynb
+          - GAN/C3/W2/Labs/C3W2_Pix2PixHD_(Optional).ipynb
+          - GAN/C3/W3/Assignments/C3W3_Assignment.ipynb
+          - GAN/C3/W3/Labs/C3W3_MUNIT_(Optional).ipynb
+
+  - Deep Learning AI:
+      - Diffusion:
+          - DLAI/Diffusion/Lab1/L1_Sampling.ipynb
+          - DLAI/Diffusion/Lab2/L2_Training.ipynb
+          - DLAI/Diffusion/Lab3/L3_Context.ipynb
+          - DLAI/Diffusion/Lab4/L4_FastSampling.ipynb
+
+      - Prompt:
+          - DLAI/Prompt/l2-guidelines.ipynb
+          - DLAI/Prompt/l4-summarizing.ipynb
+          - DLAI/Prompt/l5-inferring.ipynb
+          - DLAI/Prompt/l6-transforming.ipynb
+          - DLAI/Prompt/l7-expanding.ipynb
+          - DLAI/Prompt/l8-chatbot.ipynb
+
+  - License: license.md
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/hari31416
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/in/hari31416
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/hari31416
+    - icon: fontawesome/brands/kaggle
+      link: https://www.kaggle.com/hari31416
+    - icon: fontawesome/brands/instagram
+      link: https://www.instagram.com/hari31416
