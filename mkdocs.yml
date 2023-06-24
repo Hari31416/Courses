@@ -28,9 +28,6 @@ markdown_extensions:
       generic: true
 
 plugins:
-  #   - mkdocs-jupyter:
-  #       include_source: True
-  #       ignore_h1_titles: True
   - mknotebooks
   - search
 
@@ -218,13 +215,21 @@ nav:
           - GAN/C3/W3/Labs/C3W3_MUNIT_(Optional).ipynb
 
   - Deep Learning AI:
-      - Diffusion:
+      - How Diffusion Models Work:
           - DLAI/Diffusion/Lab1/L1_Sampling.ipynb
           - DLAI/Diffusion/Lab2/L2_Training.ipynb
           - DLAI/Diffusion/Lab3/L3_Context.ipynb
           - DLAI/Diffusion/Lab4/L4_FastSampling.ipynb
 
-      - Prompt:
+      - LangChain for LLM Application Development:
+          - DLAI/Langchain/L1-Model_prompt_parser.ipynb
+          - DLAI/Langchain/L2-Memory.ipynb
+          - DLAI/Langchain/L3-Chains.ipynb
+          - DLAI/Langchain/L4-QnA.ipynb
+          - DLAI/Langchain/L5-Evaluation.ipynb
+          - DLAI/Langchain/L6-Agents.ipynb
+
+      - ChatGPT Prompt Engineering for Developers:
           - DLAI/Prompt/l2-guidelines.ipynb
           - DLAI/Prompt/l4-summarizing.ipynb
           - DLAI/Prompt/l5-inferring.ipynb
@@ -232,6 +237,16 @@ nav:
           - DLAI/Prompt/l7-expanding.ipynb
           - DLAI/Prompt/l8-chatbot.ipynb
 
+      - Building Systems with the ChatGPT API:
+          - DLAI/Building_System/1_Language_Models,_the_Chat_Format_and_Tokens.ipynb
+          - DLAI/Building_System/2_Classification.ipynb
+          - DLAI/Building_System/3_Moderation.ipynb
+          - DLAI/Building_System/4_Chain_of_Thoughts.ipynb
+          - DLAI/Building_System/5_Chaining_Prompts.ipynb
+          - DLAI/Building_System/6_Check_Outputs.ipynb
+          - DLAI/Building_System/7_Build_an_End_to_End_System.ipynb
+          - DLAI/Building_System/8_Evaluation_Part_1.ipynb
+          - DLAI/Building_System/9_Evaluation_Part_2.ipynb
   - License: license.md
 extra:
   social:

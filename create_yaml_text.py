@@ -30,7 +30,8 @@ for file in final_notebooks_to_copy:
     new_dir = os.path.dirname(new_file)
     if not os.path.exists(new_dir):
         os.makedirs(new_dir)
-    shutil.copyfile(file, new_file)
+    if not os.path.exists(new_file) and "temp.ipynb" not in file:
+        shutil.copyfile(file, new_file)
 
 
 sep = " " * 4

@@ -12,3 +12,4 @@ all_notebooks
 .exclude
 .yml_out
 log
+.env
