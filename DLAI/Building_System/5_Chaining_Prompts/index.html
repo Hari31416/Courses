@@ -1,0 +1,4548 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="This is a collection of all the notebooks from various courses I have taken.">
+      
+      
+        <meta name="author" content="Harikesh Kushwaha">
+      
+      
+        <link rel="canonical" href="https://hari31416.github.io/Courses/DLAI/Building_System/5_Chaining_Prompts/">
+      
+      
+        <link rel="prev" href="../4_Chain_of_Thoughts/">
+      
+      
+        <link rel="next" href="../6_Check_Outputs/">
+      
+      <link rel="icon" href="../../../assets/ml.png">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.15">
+    
+    
+      
+        <title>5 Chaining Prompts - Courses</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.26e3688c.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ecc896b0.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../css/ansi-colours.css">
+    
+      <link rel="stylesheet" href="../../../css/jupyter-cells.css">
+    
+      <link rel="stylesheet" href="../../../css/pandas-dataframe.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="indigo">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#l5-process-inputs-chaining-prompts" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Courses" class="md-header__button md-logo" aria-label="Courses" data-md-component="logo">
+      
+  <img src="../../../assets/ml.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Courses
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              5 Chaining Prompts
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Hari31416/Courses" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Courses
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Courses" class="md-nav__button md-logo" aria-label="Courses" data-md-component="logo">
+      
+  <img src="../../../assets/ml.png" alt="logo">
+
+    </a>
+    Courses
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Hari31416/Courses" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Courses
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          Deep Learning Specialization
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Deep Learning Specialization
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+          C1
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          C1
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../DLS/C1/Assignments/Building_your_Deep_Neural_Network_Step_by_Step/Building_your_Deep_Neural_Network_Step_by_Step/" class="md-nav__link">
+        Building your Deep Neural Network Step by Step
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../DLS/C1/Assignments/Deep_Neural_Network_-_Application/Deep_Neural_Network_-_Application/" class="md-nav__link">
+        Deep Neural Network   Application
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../DLS/C1/Assignments/Logistic_Regression_with_a_Neural_Network_mindset/Logistic_Regression_with_a_Neural_Network_mindset/" class="md-nav__link">
+        Logistic Regression with a Neural Network mindset
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../DLS/C1/Assignments/Planar_data_classification_with_one_hidden_layer/Planar_data_classification_with_one_hidden_layer/" class="md-nav__link">
+        Planar data classification with one hidden layer
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+          C2
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          C2
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../DLS/C2/Assignments/Gradient_Checking/Gradient_Checking/" class="md-nav__link">
+        Gradient Checking
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../DLS/C2/Assignments/Initialization/Initialization/" class="md-nav__link">
+        Initialization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../DLS/C2/Assignments/Optimization_Methods/Optimization_methods/" class="md-nav__link">
+        Optimization methods
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../DLS/C2/Assignments/Regularization/Regularization/" class="md-nav__link">
+        Regularization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../DLS/C2/Assignments/Tensorflow_introduction/Tensorflow_introduction/" class="md-nav__link">
+        Tensorflow introduction
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+          C4
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2_3">
+          <span class="md-nav__icon md-icon"></span>
+          C4
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../DLS/C4/Assignments/Car_detection_with_YOLO/Autonomous_driving_application_Car_detection/" class="md-nav__link">
+        Autonomous driving application Car detection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../DLS/C4/Assignments/Convolution_model_Application/Convolution_model_Application/" class="md-nav__link">
+        Convolution model Application
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../DLS/C4/Assignments/Image_segmentation_Unet/Image_segmentation_Unet_v2/" class="md-nav__link">
+        Image segmentation Unet v2
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../DLS/C4/Assignments/Residual_Networks/Residual_Networks/" class="md-nav__link">
+        Residual Networks
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../DLS/C4/Assignments/Transfer_learning_with_MobileNet/Transfer_learning_with_MobileNet_v1/" class="md-nav__link">
+        Transfer learning with MobileNet v1
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
+          C5
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2_4">
+          <span class="md-nav__icon md-icon"></span>
+          C5
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../DLS/C5/Assignments/Building_a_Recurrent_Neural_Network_Step_by_Step/Building_a_Recurrent_Neural_Network_Step_by_Step/" class="md-nav__link">
+        Building a Recurrent Neural Network Step by Step
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../DLS/C5/Assignments/Dinosaurus_Island_Character_level_language_model/Dinosaurus_Island_Character_level_language_model/" class="md-nav__link">
+        Dinosaurus Island Character level language model
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../DLS/C5/Assignments/Emojify/Emoji_v3a/" class="md-nav__link">
+        Emoji v3a
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../DLS/C5/Assignments/Improvise_a_Jazz_Solo_with_an_LSTM_Network/Improvise_a_Jazz_Solo_with_an_LSTM_Network_v4/" class="md-nav__link">
+        Improvise a Jazz Solo with an LSTM Network v4
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../DLS/C5/Assignments/Neural_machine_translation_with_attention/Neural_machine_translation_with_attention_v4a/" class="md-nav__link">
+        Neural machine translation with attention v4a
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../DLS/C5/Assignments/Operations_on_Word_Vectors_Debiasing/Operations_on_word_vectors_v2a/" class="md-nav__link">
+        Operations on word vectors v2a
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+          Machine Learning Specialization
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Machine Learning Specialization
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+          C1
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_3_1">
+          <span class="md-nav__icon md-icon"></span>
+          C1
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../MLS/C1/W1/Assignments/Gradient_Descent/C1_W1_Lab03_Model_Representation_Soln/" class="md-nav__link">
+        C1 W1 Lab03 Model Representation Soln
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../MLS/C1/W1/Assignments/Gradient_Descent/C1_W1_Lab04_Cost_function_Soln/" class="md-nav__link">
+        C1 W1 Lab04 Cost function Soln
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../MLS/C1/W1/Assignments/Gradient_Descent/C1_W1_Lab05_Gradient_Descent_Soln/" class="md-nav__link">
+        C1 W1 Lab05 Gradient Descent Soln
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../MLS/C1/W1/Assignments/Gradient_Descent/betaversion/C1_W1_Lab01_Python_Jupyter_Soln/" class="md-nav__link">
+        C1 W1 Lab01 Python Jupyter Soln
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../MLS/C1/W1/Assignments/Gradient_Descent/betaversion/C1_W1_Lab02_Course_Preview_Soln/" class="md-nav__link">
+        C1 W1 Lab02 Course Preview Soln
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../MLS/C1/W1/Assignments/Gradient_Descent/betaversion/C1_W1_Lab03_Model_Representation_Soln/" class="md-nav__link">
+        C1 W1 Lab03 Model Representation Soln
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../MLS/C1/W1/Assignments/Gradient_Descent/betaversion/C1_W1_Lab04_Cost_function_Soln/" class="md-nav__link">
+        C1 W1 Lab04 Cost function Soln
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../MLS/C1/W1/Assignments/Gradient_Descent/betaversion/C1_W1_Lab05_Gradient_Descent_Soln/" class="md-nav__link">
+        C1 W1 Lab05 Gradient Descent Soln
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../MLS/C1/W1/Notes/Linear_Regression/" class="md-nav__link">
+        Linear Regression
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../MLS/C1/W1/Notes/Overview/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../MLS/C1/W2/Assignments/C1_W2_Lab01_Python_Numpy_Vectorization_Soln/" class="md-nav__link">
+        C1 W2 Lab01 Python Numpy Vectorization Soln
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../MLS/C1/W2/Assignments/C1_W2_Lab02_Multiple_Variable_Soln/" class="md-nav__link">
+        C1 W2 Lab02 Multiple Variable Soln
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../MLS/C1/W2/Assignments/C1_W2_Lab03_Feature_Scaling_and_Learning_Rate_Soln/" class="md-nav__link">
+        C1 W2 Lab03 Feature Scaling and Learning Rate Soln
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../MLS/C1/W2/Assignments/C1_W2_Lab04_FeatEng_PolyReg_Soln/" class="md-nav__link">
+        C1 W2 Lab04 FeatEng PolyReg Soln
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../MLS/C1/W2/Assignments/C1_W2_Lab05_Sklearn_GD_Soln/" class="md-nav__link">
+        C1 W2 Lab05 Sklearn GD Soln
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../MLS/C1/W2/Assignments/C1_W2_Lab06_Sklearn_Normal_Soln/" class="md-nav__link">
+        C1 W2 Lab06 Sklearn Normal Soln
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../MLS/C1/W2/Assignments/Linear_Regression/C1_W2_Linear_Regression/" class="md-nav__link">
+        C1 W2 Linear Regression
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../MLS/C1/W3/Assignments/C1_W3_Lab01_Classification_Soln/" class="md-nav__link">
+        C1 W3 Lab01 Classification Soln
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../MLS/C1/W3/Assignments/C1_W3_Lab02_Sigmoid_function_Soln/" class="md-nav__link">
+        C1 W3 Lab02 Sigmoid function Soln
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../MLS/C1/W3/Assignments/C1_W3_Lab03_Decision_Boundary_Soln/" class="md-nav__link">
+        C1 W3 Lab03 Decision Boundary Soln
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../MLS/C1/W3/Assignments/C1_W3_Lab04_LogisticLoss_Soln/" class="md-nav__link">
+        C1 W3 Lab04 LogisticLoss Soln
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../MLS/C1/W3/Assignments/C1_W3_Lab05_Cost_Function_Soln/" class="md-nav__link">
+        C1 W3 Lab05 Cost Function Soln
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../MLS/C1/W3/Assignments/C1_W3_Lab07_Scikit_Learn_Soln/" class="md-nav__link">
+        C1 W3 Lab07 Scikit Learn Soln
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../MLS/C1/W3/Assignments/C1_W3_Lab08_Overfitting_Soln/" class="md-nav__link">
+        C1 W3 Lab08 Overfitting Soln
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../MLS/C1/W3/Assignments/C1_W3_Lab09_Regularization_Soln/" class="md-nav__link">
+        C1 W3 Lab09 Regularization Soln
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+          C2
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_3_2">
+          <span class="md-nav__icon md-icon"></span>
+          C2
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../MLS/C2/W1/Assignment/C2_W1_Assignment/" class="md-nav__link">
+        C2 W1 Assignment
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../MLS/C2/W1/Lab/C2_W1_Lab01_Neurons_and_Layers/" class="md-nav__link">
+        C2 W1 Lab01 Neurons and Layers
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../MLS/C2/W1/Lab/C2_W1_Lab02_CoffeeRoasting_TF/" class="md-nav__link">
+        C2 W1 Lab02 CoffeeRoasting TF
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../MLS/C2/W1/Lab/C2_W1_Lab03_CoffeeRoasting_Numpy/" class="md-nav__link">
+        C2 W1 Lab03 CoffeeRoasting Numpy
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../MLS/C2/W2/Assignment/C2_W2_Assignment/" class="md-nav__link">
+        C2 W2 Assignment
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../MLS/C2/W2/Lab/C2_W2_Multiclass_TF/" class="md-nav__link">
+        C2 W2 Multiclass TF
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../MLS/C2/W2/Lab/C2_W2_Relu/" class="md-nav__link">
+        C2 W2 Relu
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../MLS/C2/W2/Lab/C2_W2_SoftMax/" class="md-nav__link">
+        C2 W2 SoftMax
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../MLS/C2/W3/Assignment/C2_W3_Assignment/" class="md-nav__link">
+        C2 W3 Assignment
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../MLS/C2/W4/Assignment/C2_W4_Decision_Tree_with_Markdown/" class="md-nav__link">
+        C2 W4 Decision Tree with Markdown
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+          C3
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_3_3">
+          <span class="md-nav__icon md-icon"></span>
+          C3
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../MLS/C3/W1/Assignment/A1/C3_W1_KMeans_Assignment/" class="md-nav__link">
+        C3 W1 KMeans Assignment
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../MLS/C3/W1/Assignment/A2/C3_W1_Anomaly_Detection/" class="md-nav__link">
+        C3 W1 Anomaly Detection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../MLS/C3/W2/Assignment/A1/C3_W2_Collaborative_RecSys_Assignment/" class="md-nav__link">
+        C3 W2 Collaborative RecSys Assignment
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../MLS/C3/W2/Assignment/A2/C3_W2_RecSysNN_Assignment/" class="md-nav__link">
+        C3 W2 RecSysNN Assignment
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../MLS/C3/W3/Assignment/C3_W3_A1_Assignment/" class="md-nav__link">
+        C3 W3 A1 Assignment
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../MLS/C3/W3/Lab/State-action%20value%20function%20example/" class="md-nav__link">
+        State action value function example
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+          TensorFlow Advanced Techniques Specialization
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          TensorFlow Advanced Techniques Specialization
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
+          C1
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_4_1">
+          <span class="md-nav__icon md-icon"></span>
+          C1
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C1/W1/Labs/C1_W1_Lab_1_functional-practice/" class="md-nav__link">
+        C1 W1 Lab 1 functional practice
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C1/W1/Labs/C1_W1_Lab_2_multi-output/" class="md-nav__link">
+        C1 W1 Lab 2 multi output
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C1/W1/Labs/C1_W1_Lab_3_siamese-network/" class="md-nav__link">
+        C1 W1 Lab 3 siamese network
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C1/W1/Multiple_Output_Models_using_the_Keras_Functional_API/C1W1_Assignment/" class="md-nav__link">
+        C1W1 Assignment
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C1/W2/Creating_a_Custom_Loss_Function/C1W2_Assignment/" class="md-nav__link">
+        C1W2 Assignment
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C1/W2/Labs/C1_W2_Lab_1_huber-loss/" class="md-nav__link">
+        C1 W2 Lab 1 huber loss
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C1/W2/Labs/C1_W2_Lab_2_huber-object-loss/" class="md-nav__link">
+        C1 W2 Lab 2 huber object loss
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C1/W3/Implement_a_Quadratic_Layer/C1W3_Assignment/" class="md-nav__link">
+        C1W3 Assignment
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C1/W3/Labs/C1_W3_Lab_1_lambda-layer/" class="md-nav__link">
+        C1 W3 Lab 1 lambda layer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C1/W3/Labs/C1_W3_Lab_2_custom-dense-layer/" class="md-nav__link">
+        C1 W3 Lab 2 custom dense layer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C1/W3/Labs/C1_W3_Lab_3_custom-layer-activation/" class="md-nav__link">
+        C1 W3 Lab 3 custom layer activation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C1/W4/Create_a_VGG_network/C1W4_Assignment/" class="md-nav__link">
+        C1W4 Assignment
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C1/W4/Labs/C1_W4_Lab_1_basic-model/" class="md-nav__link">
+        C1 W4 Lab 1 basic model
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C1/W4/Labs/C1_W4_Lab_2_resnet-example/" class="md-nav__link">
+        C1 W4 Lab 2 resnet example
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+          C2
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_4_2">
+          <span class="md-nav__icon md-icon"></span>
+          C2
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C2/W1/Assignment/C2W1_Assignment/" class="md-nav__link">
+        C2W1 Assignment
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C2/W1/Labs/C2_W1_Lab_1_basic-tensors/" class="md-nav__link">
+        C2 W1 Lab 1 basic tensors
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C2/W1/Labs/C2_W1_Lab_2_gradient-tape-basics/" class="md-nav__link">
+        C2 W1 Lab 2 gradient tape basics
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C2/W2/Assignment/C2W2_Assignment/" class="md-nav__link">
+        C2W2 Assignment
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C2/W2/Labs/C2_W2_Lab_1_training-basics/" class="md-nav__link">
+        C2 W2 Lab 1 training basics
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C2/W2/Labs/C2_W2_Lab_2_training-categorical/" class="md-nav__link">
+        C2 W2 Lab 2 training categorical
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C2/W3/Assignment/C2W3_Assignment/" class="md-nav__link">
+        C2W3 Assignment
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C2/W3/Labs/C2_W3_Lab_1_autograph-basics/" class="md-nav__link">
+        C2 W3 Lab 1 autograph basics
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C2/W3/Labs/C2_W3_Lab_2-graphs-for-complex-code/" class="md-nav__link">
+        C2 W3 Lab 2 graphs for complex code
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C2/W4/Assignment/C2W4_Assignment/" class="md-nav__link">
+        C2W4 Assignment
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C2/W4/Labs/C2_W4_Lab_1_basic-mirrored-strategy/" class="md-nav__link">
+        C2 W4 Lab 1 basic mirrored strategy
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C2/W4/Labs/C2_W4_Lab_2_multi-GPU-mirrored-strategy/" class="md-nav__link">
+        C2 W4 Lab 2 multi GPU mirrored strategy
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C2/W4/Labs/C2_W4_Lab_3_using-TPU-strategy/" class="md-nav__link">
+        C2 W4 Lab 3 using TPU strategy
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C2/W4/Labs/C2_W4_Lab_4_one-device-strategy/" class="md-nav__link">
+        C2 W4 Lab 4 one device strategy
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
+          C3
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_4_3">
+          <span class="md-nav__icon md-icon"></span>
+          C3
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C3/W1/Assignment/C3W1_Assignment/" class="md-nav__link">
+        C3W1 Assignment
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C3/W1/Labs/C3_W1_Lab_2_Transfer_Learning_CIFAR_10/" class="md-nav__link">
+        C3 W1 Lab 2 Transfer Learning CIFAR 10
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C3/W1/Labs/C3_W1_Lab_3_Object_Localization/" class="md-nav__link">
+        C3 W1 Lab 3 Object Localization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C3/W2/Assignment/C3W2_Assignment/" class="md-nav__link">
+        C3W2 Assignment
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C3/W2/Labs/C3_W2_Lab_1_Simple_Object_Detection/" class="md-nav__link">
+        C3 W2 Lab 1 Simple Object Detection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C3/W2/Labs/Object_Detection_Inference_on_TF_2_and_TF_Hub/" class="md-nav__link">
+        Object Detection Inference on TF 2 and TF Hub
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C3/W3/Assignment/C3W3_Assignment/" class="md-nav__link">
+        C3W3 Assignment
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C3/W3/Labs/C3_W3_Lab_1_VGG16_FCN8_CamVid/" class="md-nav__link">
+        C3 W3 Lab 1 VGG16 FCN8 CamVid
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C3/W3/Labs/C3_W3_Lab_2_OxfordPets_UNet/" class="md-nav__link">
+        C3 W3 Lab 2 OxfordPets UNet
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C3/W3/Labs/C3_W3_Lab_3_Mask_RCNN_ImageSegmentation/" class="md-nav__link">
+        C3 W3 Lab 3 Mask RCNN ImageSegmentation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C3/W4/Assignment/C3_W4_Assignment/" class="md-nav__link">
+        C3 W4 Assignment
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C3/W4/Labs/C3_W4_Lab_1_FashionMNIST_CAM/" class="md-nav__link">
+        C3 W4 Lab 1 FashionMNIST CAM
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C3/W4/Labs/C3_W4_Lab_2_CatsDogs_CAM/" class="md-nav__link">
+        C3 W4 Lab 2 CatsDogs CAM
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C3/W4/Labs/C3_W4_Lab_3_Saliency/" class="md-nav__link">
+        C3 W4 Lab 3 Saliency
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_4" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_4" id="__nav_4_4_label" tabindex="0">
+          C4
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_4_4">
+          <span class="md-nav__icon md-icon"></span>
+          C4
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C4/W1/Assignment/C4W1_Assignment/" class="md-nav__link">
+        C4W1 Assignment
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C4/W1/Labs/C4_W1_Lab_1_Neural_Style_Transfer/" class="md-nav__link">
+        C4 W1 Lab 1 Neural Style Transfer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C4/W1/Labs/C4_W1_Lab_2_Fast_NST/" class="md-nav__link">
+        C4 W1 Lab 2 Fast NST
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C4/W2/Assignment/C4W2_Assignment/" class="md-nav__link">
+        C4W2 Assignment
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C4/W2/Labs/C4_W2_Lab_1_FirstAutoEncoder/" class="md-nav__link">
+        C4 W2 Lab 1 FirstAutoEncoder
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C4/W2/Labs/C4_W2_Lab_2_MNIST_Autoencoder/" class="md-nav__link">
+        C4 W2 Lab 2 MNIST Autoencoder
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C4/W2/Labs/C4_W2_Lab_3_MNIST_DeepAutoencoder/" class="md-nav__link">
+        C4 W2 Lab 3 MNIST DeepAutoencoder
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C4/W2/Labs/C4_W2_Lab_4_FashionMNIST_CNNAutoEncoder/" class="md-nav__link">
+        C4 W2 Lab 4 FashionMNIST CNNAutoEncoder
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C4/W2/Labs/C4_W2_Lab_5_FashionMNIST_NoisyCNNAutoEncoder/" class="md-nav__link">
+        C4 W2 Lab 5 FashionMNIST NoisyCNNAutoEncoder
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C4/W3/Assignment/C4W3_Assignment/" class="md-nav__link">
+        C4W3 Assignment
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C4/W3/Labs/C4_W3_Lab_1_VAE_MNIST/" class="md-nav__link">
+        C4 W3 Lab 1 VAE MNIST
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C4/W4/Assignment/C4W4_Assignment/" class="md-nav__link">
+        C4W4 Assignment
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C4/W4/Labs/C4_W4_Lab_1_First_GAN/" class="md-nav__link">
+        C4 W4 Lab 1 First GAN
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C4/W4/Labs/C4_W4_Lab_2_First_DCGAN/" class="md-nav__link">
+        C4 W4 Lab 2 First DCGAN
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../TF_Specialization/C4/W4/Labs/C4_W4_Lab_3_CelebA_GAN_Experiments/" class="md-nav__link">
+        C4 W4 Lab 3 CelebA GAN Experiments
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+          Generative Adversarial Networks Specialization
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Generative Adversarial Networks Specialization
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_1" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5_1" id="__nav_5_1_label" tabindex="0">
+          C1
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_1_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_5_1">
+          <span class="md-nav__icon md-icon"></span>
+          C1
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../GAN/C1/W1/Assignments/C1W1_Your_First_GAN/" class="md-nav__link">
+        C1W1 Your First GAN
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../GAN/C1/W1/Labs/Intro_to_PyTorch/" class="md-nav__link">
+        Intro to PyTorch
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../GAN/C1/W2/Assignments/C1_W2_Assignment/" class="md-nav__link">
+        C1 W2 Assignment
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../GAN/C1/W2/Labs/C1W2_Video_Generation_%28Optional%29/" class="md-nav__link">
+        C1W2 Video Generation (Optional)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../GAN/C1/W3/Assignments/C1W3_WGAN_GP/" class="md-nav__link">
+        C1W3 WGAN GP
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../GAN/C1/W3/Labs/SNGAN/" class="md-nav__link">
+        SNGAN
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../GAN/C1/W4/Assignments/C1W4A_Build_a_Conditional_GAN/" class="md-nav__link">
+        C1W4A Build a Conditional GAN
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../GAN/C1/W4/Assignments/C1W4B_Controllable_Generation/" class="md-nav__link">
+        C1W4B Controllable Generation
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+          C2
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_5_2">
+          <span class="md-nav__icon md-icon"></span>
+          C2
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../GAN/C2/W1/Assignments/C2W1_Assignment/" class="md-nav__link">
+        C2W1 Assignment
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../GAN/C2/W1/Labs/PPL/" class="md-nav__link">
+        PPL
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../GAN/C2/W2/Assignments/C2W2_Assignment/" class="md-nav__link">
+        C2W2 Assignment
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../GAN/C2/W2/Labs/C2W2_VAE/" class="md-nav__link">
+        C2W2 VAE
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../GAN/C2/W3/Assignments/C2W3_Assignment/" class="md-nav__link">
+        C2W3 Assignment
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../GAN/C2/W3/Labs/BigGAN/" class="md-nav__link">
+        BigGAN
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../GAN/C2/W3/Labs/StyleGAN2/" class="md-nav__link">
+        StyleGAN2
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_3" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5_3" id="__nav_5_3_label" tabindex="0">
+          C3
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_3_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_5_3">
+          <span class="md-nav__icon md-icon"></span>
+          C3
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../GAN/C3/W1/Assignments/C3W1_Assignment/" class="md-nav__link">
+        C3W1 Assignment
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../GAN/C3/W1/Labs/C3W1_Generative_Teaching_Networks_%28Optional%29/" class="md-nav__link">
+        C3W1 Generative Teaching Networks (Optional)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../GAN/C3/W2/Assignments/C3W2A_Assignment/" class="md-nav__link">
+        C3W2A Assignment
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../GAN/C3/W2/Assignments/C3W2B_Assignment/" class="md-nav__link">
+        C3W2B Assignment
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../GAN/C3/W2/Labs/C3W2_GauGAN_%28Optional%29/" class="md-nav__link">
+        C3W2 GauGAN (Optional)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../GAN/C3/W2/Labs/C3W2_Pix2PixHD_%28Optional%29/" class="md-nav__link">
+        C3W2 Pix2PixHD (Optional)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../GAN/C3/W3/Assignments/C3W3_Assignment/" class="md-nav__link">
+        C3W3 Assignment
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../GAN/C3/W3/Labs/C3W3_MUNIT_%28Optional%29/" class="md-nav__link">
+        C3W3 MUNIT (Optional)
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+          Deep Learning AI
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Deep Learning AI
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+          How Diffusion Models Work
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_1_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_6_1">
+          <span class="md-nav__icon md-icon"></span>
+          How Diffusion Models Work
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Diffusion/Lab1/L1_Sampling/" class="md-nav__link">
+        L1 Sampling
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Diffusion/Lab2/L2_Training/" class="md-nav__link">
+        L2 Training
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Diffusion/Lab3/L3_Context/" class="md-nav__link">
+        L3 Context
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Diffusion/Lab4/L4_FastSampling/" class="md-nav__link">
+        L4 FastSampling
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+          LangChain for LLM Application Development
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_6_2">
+          <span class="md-nav__icon md-icon"></span>
+          LangChain for LLM Application Development
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Langchain/L1-Model_prompt_parser/" class="md-nav__link">
+        L1 Model prompt parser
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Langchain/L2-Memory/" class="md-nav__link">
+        L2 Memory
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Langchain/L3-Chains/" class="md-nav__link">
+        L3 Chains
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Langchain/L4-QnA/" class="md-nav__link">
+        L4 QnA
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Langchain/L5-Evaluation/" class="md-nav__link">
+        L5 Evaluation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Langchain/L6-Agents/" class="md-nav__link">
+        L6 Agents
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_3" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+          ChatGPT Prompt Engineering for Developers
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_3_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_6_3">
+          <span class="md-nav__icon md-icon"></span>
+          ChatGPT Prompt Engineering for Developers
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Prompt/l2-guidelines/" class="md-nav__link">
+        L2 guidelines
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Prompt/l4-summarizing/" class="md-nav__link">
+        L4 summarizing
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Prompt/l5-inferring/" class="md-nav__link">
+        L5 inferring
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Prompt/l6-transforming/" class="md-nav__link">
+        L6 transforming
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Prompt/l7-expanding/" class="md-nav__link">
+        L7 expanding
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Prompt/l8-chatbot/" class="md-nav__link">
+        L8 chatbot
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_4" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6_4" id="__nav_6_4_label" tabindex="0">
+          Building Systems with the ChatGPT API
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_4_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_6_4">
+          <span class="md-nav__icon md-icon"></span>
+          Building Systems with the ChatGPT API
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_Language_Models%2C_the_Chat_Format_and_Tokens/" class="md-nav__link">
+        1 Language Models, the Chat Format and Tokens
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2_Classification/" class="md-nav__link">
+        2 Classification
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3_Moderation/" class="md-nav__link">
+        3 Moderation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4_Chain_of_Thoughts/" class="md-nav__link">
+        4 Chain of Thoughts
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          5 Chaining Prompts
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        5 Chaining Prompts
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#setup" class="md-nav__link">
+    Setup
+  </a>
+  
+    <nav class="md-nav" aria-label="Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#load-the-api-key-and-relevant-python-libaries" class="md-nav__link">
+    Load the API key and relevant Python libaries.
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implement-a-complex-task-with-multiple-prompts" class="md-nav__link">
+    Implement a complex task with multiple prompts
+  </a>
+  
+    <nav class="md-nav" aria-label="Implement a complex task with multiple prompts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#extract-relevant-product-and-category-names" class="md-nav__link">
+    Extract relevant product and category names
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#retrieve-detailed-product-information-for-extracted-products-and-categories" class="md-nav__link">
+    Retrieve detailed product information for extracted products and categories
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#read-python-string-into-python-list-of-dictionaries" class="md-nav__link">
+    Read Python string into Python list of dictionaries
+  </a>
+  
+    <nav class="md-nav" aria-label="Read Python string into Python list of dictionaries">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#retrieve-detailed-product-information-for-the-relevant-products-and-categories" class="md-nav__link">
+    Retrieve detailed product information for the relevant products and categories
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generate-answer-to-user-query-based-on-detailed-product-information" class="md-nav__link">
+    Generate answer to user query based on detailed product information
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6_Check_Outputs/" class="md-nav__link">
+        6 Check Outputs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7_Build_an_End_to_End_System/" class="md-nav__link">
+        7 Build an End to End System
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../8_Evaluation_Part_1/" class="md-nav__link">
+        8 Evaluation Part 1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../9_Evaluation_Part_2/" class="md-nav__link">
+        9 Evaluation Part 2
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../license/" class="md-nav__link">
+        License
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script>
+(function() {
+  function addWidgetsRenderer() {
+    var requireJsScript = document.createElement('script');
+    requireJsScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js';
+
+    var mimeElement = document.querySelector('script[type="application/vnd.jupyter.widget-view+json"]');
+    var jupyterWidgetsScript = document.createElement('script');
+    var widgetRendererSrc = 'https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js';
+    var widgetState;
+
+    // Fallback for older version:
+    try {
+      widgetState = mimeElement && JSON.parse(mimeElement.innerHTML);
+
+      if (widgetState && (widgetState.version_major < 2 || !widgetState.version_major)) {
+        widgetRendererSrc = 'jupyter-js-widgets@*/dist/embed.js';
+      }
+    } catch(e) {}
+
+    jupyterWidgetsScript.src = widgetRendererSrc;
+
+    document.body.appendChild(requireJsScript);
+    document.body.appendChild(jupyterWidgetsScript);
+  }
+
+  document.addEventListener('DOMContentLoaded', addWidgetsRenderer);
+}());
+</script>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="l5-process-inputs-chaining-prompts">L5 Process Inputs: Chaining Prompts</h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="setup">Setup</h2>
+<h4 id="load-the-api-key-and-relevant-python-libaries">Load the API key and relevant Python libaries.</h4>
+<p>In this course, we've provided some code that loads the OpenAI API key for you.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">openai</span>
+<span class="kn">from</span> <span class="nn">dotenv</span> <span class="kn">import</span> <span class="n">load_dotenv</span><span class="p">,</span> <span class="n">find_dotenv</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">load_dotenv</span><span class="p">(</span><span class="n">find_dotenv</span><span class="p">())</span> <span class="c1"># read local .env file</span>
+
+<span class="n">openai</span><span class="o">.</span><span class="n">api_key</span>  <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;OPENAI_API_KEY&#39;</span><span class="p">]</span>
+</code></pre></div>
+
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_completion_from_messages</span><span class="p">(</span><span class="n">messages</span><span class="p">,</span> 
+                                 <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-3.5-turbo&quot;</span><span class="p">,</span> 
+                                 <span class="n">temperature</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> 
+                                 <span class="n">max_tokens</span><span class="o">=</span><span class="mi">500</span><span class="p">):</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">openai</span><span class="o">.</span><span class="n">ChatCompletion</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+        <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+        <span class="n">messages</span><span class="o">=</span><span class="n">messages</span><span class="p">,</span>
+        <span class="n">temperature</span><span class="o">=</span><span class="n">temperature</span><span class="p">,</span> 
+        <span class="n">max_tokens</span><span class="o">=</span><span class="n">max_tokens</span><span class="p">,</span> 
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="p">[</span><span class="s2">&quot;content&quot;</span><span class="p">]</span>
+</code></pre></div>
+
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="implement-a-complex-task-with-multiple-prompts">Implement a complex task with multiple prompts</h2>
+<h3 id="extract-relevant-product-and-category-names">Extract relevant product and category names</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="n">delimiter</span> <span class="o">=</span> <span class="s2">&quot;####&quot;</span>
+<span class="n">system_message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">You will be provided with customer service queries. </span><span class="se">\</span>
+<span class="s2">The customer service query will be delimited with </span><span class="se">\</span>
+<span class="si">{</span><span class="n">delimiter</span><span class="si">}</span><span class="s2"> characters.</span>
+<span class="s2">Output a python list of objects, where each object has </span><span class="se">\</span>
+<span class="s2">the following format:</span>
+<span class="s2">    &#39;category&#39;: &lt;one of Computers and Laptops, </span><span class="se">\</span>
+<span class="s2">    Smartphones and Accessories, </span><span class="se">\</span>
+<span class="s2">    Televisions and Home Theater Systems, </span><span class="se">\</span>
+<span class="s2">    Gaming Consoles and Accessories, </span>
+<span class="s2">    Audio Equipment, Cameras and Camcorders&gt;,</span>
+<span class="s2">OR</span>
+<span class="s2">    &#39;products&#39;: &lt;a list of products that must </span><span class="se">\</span>
+<span class="s2">    be found in the allowed products below&gt;</span>
+
+<span class="s2">Where the categories and products must be found in </span><span class="se">\</span>
+<span class="s2">the customer service query.</span>
+<span class="s2">If a product is mentioned, it must be associated with </span><span class="se">\</span>
+<span class="s2">the correct category in the allowed products list below.</span>
+<span class="s2">If no products or categories are found, output an </span><span class="se">\</span>
+<span class="s2">empty list.</span>
+
+<span class="s2">Allowed products: </span>
+
+<span class="s2">Computers and Laptops category:</span>
+<span class="s2">TechPro Ultrabook</span>
+<span class="s2">BlueWave Gaming Laptop</span>
+<span class="s2">PowerLite Convertible</span>
+<span class="s2">TechPro Desktop</span>
+<span class="s2">BlueWave Chromebook</span>
+
+<span class="s2">Smartphones and Accessories category:</span>
+<span class="s2">SmartX ProPhone</span>
+<span class="s2">MobiTech PowerCase</span>
+<span class="s2">SmartX MiniPhone</span>
+<span class="s2">MobiTech Wireless Charger</span>
+<span class="s2">SmartX EarBuds</span>
+
+<span class="s2">Televisions and Home Theater Systems category:</span>
+<span class="s2">CineView 4K TV</span>
+<span class="s2">SoundMax Home Theater</span>
+<span class="s2">CineView 8K TV</span>
+<span class="s2">SoundMax Soundbar</span>
+<span class="s2">CineView OLED TV</span>
+
+<span class="s2">Gaming Consoles and Accessories category:</span>
+<span class="s2">GameSphere X</span>
+<span class="s2">ProGamer Controller</span>
+<span class="s2">GameSphere Y</span>
+<span class="s2">ProGamer Racing Wheel</span>
+<span class="s2">GameSphere VR Headset</span>
+
+<span class="s2">Audio Equipment category:</span>
+<span class="s2">AudioPhonic Noise-Canceling Headphones</span>
+<span class="s2">WaveSound Bluetooth Speaker</span>
+<span class="s2">AudioPhonic True Wireless Earbuds</span>
+<span class="s2">WaveSound Soundbar</span>
+<span class="s2">AudioPhonic Turntable</span>
+
+<span class="s2">Cameras and Camcorders category:</span>
+<span class="s2">FotoSnap DSLR Camera</span>
+<span class="s2">ActionCam 4K</span>
+<span class="s2">FotoSnap Mirrorless Camera</span>
+<span class="s2">ZoomMaster Camcorder</span>
+<span class="s2">FotoSnap Instant Camera</span>
+
+<span class="s2">Only output the list of objects, with nothing else.</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">user_message_1</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2"> tell me about the smartx pro phone and </span><span class="se">\</span>
+<span class="s2"> the fotosnap camera, the dslr one. </span><span class="se">\</span>
+<span class="s2"> Also tell me about your tvs &quot;&quot;&quot;</span>
+<span class="n">messages</span> <span class="o">=</span>  <span class="p">[</span>  
+<span class="p">{</span><span class="s1">&#39;role&#39;</span><span class="p">:</span><span class="s1">&#39;system&#39;</span><span class="p">,</span> 
+ <span class="s1">&#39;content&#39;</span><span class="p">:</span> <span class="n">system_message</span><span class="p">},</span>    
+<span class="p">{</span><span class="s1">&#39;role&#39;</span><span class="p">:</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> 
+ <span class="s1">&#39;content&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">delimiter</span><span class="si">}{</span><span class="n">user_message_1</span><span class="si">}{</span><span class="n">delimiter</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">},</span>  
+<span class="p">]</span> 
+<span class="n">category_and_product_response_1</span> <span class="o">=</span> <span class="n">get_completion_from_messages</span><span class="p">(</span><span class="n">messages</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">category_and_product_response_1</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>[
+    {&#39;category&#39;: &#39;Smartphones and Accessories&#39;, &#39;products&#39;: [&#39;SmartX ProPhone&#39;]},
+    {&#39;category&#39;: &#39;Cameras and Camcorders&#39;, &#39;products&#39;: [&#39;FotoSnap DSLR Camera&#39;]},
+    {&#39;category&#39;: &#39;Televisions and Home Theater Systems&#39;}
+]
+</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="n">user_message_2</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">my router isn&#39;t working&quot;&quot;&quot;</span>
+<span class="n">messages</span> <span class="o">=</span>  <span class="p">[</span>  
+<span class="p">{</span><span class="s1">&#39;role&#39;</span><span class="p">:</span><span class="s1">&#39;system&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;content&#39;</span><span class="p">:</span> <span class="n">system_message</span><span class="p">},</span>    
+<span class="p">{</span><span class="s1">&#39;role&#39;</span><span class="p">:</span><span class="s1">&#39;user&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;content&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">delimiter</span><span class="si">}{</span><span class="n">user_message_2</span><span class="si">}{</span><span class="n">delimiter</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">},</span>  
+<span class="p">]</span> 
+<span class="n">response</span> <span class="o">=</span> <span class="n">get_completion_from_messages</span><span class="p">(</span><span class="n">messages</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>[]
+</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="retrieve-detailed-product-information-for-extracted-products-and-categories">Retrieve detailed product information for extracted products and categories</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="c1"># product information</span>
+<span class="n">products</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;TechPro Ultrabook&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;TechPro Ultrabook&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;category&quot;</span><span class="p">:</span> <span class="s2">&quot;Computers and Laptops&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;brand&quot;</span><span class="p">:</span> <span class="s2">&quot;TechPro&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;model_number&quot;</span><span class="p">:</span> <span class="s2">&quot;TP-UB100&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;warranty&quot;</span><span class="p">:</span> <span class="s2">&quot;1 year&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;rating&quot;</span><span class="p">:</span> <span class="mf">4.5</span><span class="p">,</span>
+        <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;13.3-inch display&quot;</span><span class="p">,</span> <span class="s2">&quot;8GB RAM&quot;</span><span class="p">,</span> <span class="s2">&quot;256GB SSD&quot;</span><span class="p">,</span> <span class="s2">&quot;Intel Core i5 processor&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A sleek and lightweight ultrabook for everyday use.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;price&quot;</span><span class="p">:</span> <span class="mf">799.99</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;BlueWave Gaming Laptop&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;BlueWave Gaming Laptop&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;category&quot;</span><span class="p">:</span> <span class="s2">&quot;Computers and Laptops&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;brand&quot;</span><span class="p">:</span> <span class="s2">&quot;BlueWave&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;model_number&quot;</span><span class="p">:</span> <span class="s2">&quot;BW-GL200&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;warranty&quot;</span><span class="p">:</span> <span class="s2">&quot;2 years&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;rating&quot;</span><span class="p">:</span> <span class="mf">4.7</span><span class="p">,</span>
+        <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;15.6-inch display&quot;</span><span class="p">,</span> <span class="s2">&quot;16GB RAM&quot;</span><span class="p">,</span> <span class="s2">&quot;512GB SSD&quot;</span><span class="p">,</span> <span class="s2">&quot;NVIDIA GeForce RTX 3060&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A high-performance gaming laptop for an immersive experience.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;price&quot;</span><span class="p">:</span> <span class="mf">1199.99</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;PowerLite Convertible&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;PowerLite Convertible&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;category&quot;</span><span class="p">:</span> <span class="s2">&quot;Computers and Laptops&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;brand&quot;</span><span class="p">:</span> <span class="s2">&quot;PowerLite&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;model_number&quot;</span><span class="p">:</span> <span class="s2">&quot;PL-CV300&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;warranty&quot;</span><span class="p">:</span> <span class="s2">&quot;1 year&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;rating&quot;</span><span class="p">:</span> <span class="mf">4.3</span><span class="p">,</span>
+        <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;14-inch touchscreen&quot;</span><span class="p">,</span> <span class="s2">&quot;8GB RAM&quot;</span><span class="p">,</span> <span class="s2">&quot;256GB SSD&quot;</span><span class="p">,</span> <span class="s2">&quot;360-degree hinge&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A versatile convertible laptop with a responsive touchscreen.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;price&quot;</span><span class="p">:</span> <span class="mf">699.99</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;TechPro Desktop&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;TechPro Desktop&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;category&quot;</span><span class="p">:</span> <span class="s2">&quot;Computers and Laptops&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;brand&quot;</span><span class="p">:</span> <span class="s2">&quot;TechPro&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;model_number&quot;</span><span class="p">:</span> <span class="s2">&quot;TP-DT500&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;warranty&quot;</span><span class="p">:</span> <span class="s2">&quot;1 year&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;rating&quot;</span><span class="p">:</span> <span class="mf">4.4</span><span class="p">,</span>
+        <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Intel Core i7 processor&quot;</span><span class="p">,</span> <span class="s2">&quot;16GB RAM&quot;</span><span class="p">,</span> <span class="s2">&quot;1TB HDD&quot;</span><span class="p">,</span> <span class="s2">&quot;NVIDIA GeForce GTX 1660&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A powerful desktop computer for work and play.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;price&quot;</span><span class="p">:</span> <span class="mf">999.99</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;BlueWave Chromebook&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;BlueWave Chromebook&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;category&quot;</span><span class="p">:</span> <span class="s2">&quot;Computers and Laptops&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;brand&quot;</span><span class="p">:</span> <span class="s2">&quot;BlueWave&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;model_number&quot;</span><span class="p">:</span> <span class="s2">&quot;BW-CB100&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;warranty&quot;</span><span class="p">:</span> <span class="s2">&quot;1 year&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;rating&quot;</span><span class="p">:</span> <span class="mf">4.1</span><span class="p">,</span>
+        <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;11.6-inch display&quot;</span><span class="p">,</span> <span class="s2">&quot;4GB RAM&quot;</span><span class="p">,</span> <span class="s2">&quot;32GB eMMC&quot;</span><span class="p">,</span> <span class="s2">&quot;Chrome OS&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A compact and affordable Chromebook for everyday tasks.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;price&quot;</span><span class="p">:</span> <span class="mf">249.99</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;SmartX ProPhone&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;SmartX ProPhone&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;category&quot;</span><span class="p">:</span> <span class="s2">&quot;Smartphones and Accessories&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;brand&quot;</span><span class="p">:</span> <span class="s2">&quot;SmartX&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;model_number&quot;</span><span class="p">:</span> <span class="s2">&quot;SX-PP10&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;warranty&quot;</span><span class="p">:</span> <span class="s2">&quot;1 year&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;rating&quot;</span><span class="p">:</span> <span class="mf">4.6</span><span class="p">,</span>
+        <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;6.1-inch display&quot;</span><span class="p">,</span> <span class="s2">&quot;128GB storage&quot;</span><span class="p">,</span> <span class="s2">&quot;12MP dual camera&quot;</span><span class="p">,</span> <span class="s2">&quot;5G&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A powerful smartphone with advanced camera features.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;price&quot;</span><span class="p">:</span> <span class="mf">899.99</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;MobiTech PowerCase&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;MobiTech PowerCase&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;category&quot;</span><span class="p">:</span> <span class="s2">&quot;Smartphones and Accessories&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;brand&quot;</span><span class="p">:</span> <span class="s2">&quot;MobiTech&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;model_number&quot;</span><span class="p">:</span> <span class="s2">&quot;MT-PC20&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;warranty&quot;</span><span class="p">:</span> <span class="s2">&quot;1 year&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;rating&quot;</span><span class="p">:</span> <span class="mf">4.3</span><span class="p">,</span>
+        <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;5000mAh battery&quot;</span><span class="p">,</span> <span class="s2">&quot;Wireless charging&quot;</span><span class="p">,</span> <span class="s2">&quot;Compatible with SmartX ProPhone&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A protective case with built-in battery for extended usage.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;price&quot;</span><span class="p">:</span> <span class="mf">59.99</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;SmartX MiniPhone&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;SmartX MiniPhone&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;category&quot;</span><span class="p">:</span> <span class="s2">&quot;Smartphones and Accessories&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;brand&quot;</span><span class="p">:</span> <span class="s2">&quot;SmartX&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;model_number&quot;</span><span class="p">:</span> <span class="s2">&quot;SX-MP5&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;warranty&quot;</span><span class="p">:</span> <span class="s2">&quot;1 year&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;rating&quot;</span><span class="p">:</span> <span class="mf">4.2</span><span class="p">,</span>
+        <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;4.7-inch display&quot;</span><span class="p">,</span> <span class="s2">&quot;64GB storage&quot;</span><span class="p">,</span> <span class="s2">&quot;8MP camera&quot;</span><span class="p">,</span> <span class="s2">&quot;4G&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A compact and affordable smartphone for basic tasks.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;price&quot;</span><span class="p">:</span> <span class="mf">399.99</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;MobiTech Wireless Charger&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;MobiTech Wireless Charger&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;category&quot;</span><span class="p">:</span> <span class="s2">&quot;Smartphones and Accessories&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;brand&quot;</span><span class="p">:</span> <span class="s2">&quot;MobiTech&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;model_number&quot;</span><span class="p">:</span> <span class="s2">&quot;MT-WC10&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;warranty&quot;</span><span class="p">:</span> <span class="s2">&quot;1 year&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;rating&quot;</span><span class="p">:</span> <span class="mf">4.5</span><span class="p">,</span>
+        <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;10W fast charging&quot;</span><span class="p">,</span> <span class="s2">&quot;Qi-compatible&quot;</span><span class="p">,</span> <span class="s2">&quot;LED indicator&quot;</span><span class="p">,</span> <span class="s2">&quot;Compact design&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A convenient wireless charger for a clutter-free workspace.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;price&quot;</span><span class="p">:</span> <span class="mf">29.99</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;SmartX EarBuds&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;SmartX EarBuds&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;category&quot;</span><span class="p">:</span> <span class="s2">&quot;Smartphones and Accessories&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;brand&quot;</span><span class="p">:</span> <span class="s2">&quot;SmartX&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;model_number&quot;</span><span class="p">:</span> <span class="s2">&quot;SX-EB20&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;warranty&quot;</span><span class="p">:</span> <span class="s2">&quot;1 year&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;rating&quot;</span><span class="p">:</span> <span class="mf">4.4</span><span class="p">,</span>
+        <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;True wireless&quot;</span><span class="p">,</span> <span class="s2">&quot;Bluetooth 5.0&quot;</span><span class="p">,</span> <span class="s2">&quot;Touch controls&quot;</span><span class="p">,</span> <span class="s2">&quot;24-hour battery life&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Experience true wireless freedom with these comfortable earbuds.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;price&quot;</span><span class="p">:</span> <span class="mf">99.99</span>
+    <span class="p">},</span>
+
+    <span class="s2">&quot;CineView 4K TV&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;CineView 4K TV&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;category&quot;</span><span class="p">:</span> <span class="s2">&quot;Televisions and Home Theater Systems&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;brand&quot;</span><span class="p">:</span> <span class="s2">&quot;CineView&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;model_number&quot;</span><span class="p">:</span> <span class="s2">&quot;CV-4K55&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;warranty&quot;</span><span class="p">:</span> <span class="s2">&quot;2 years&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;rating&quot;</span><span class="p">:</span> <span class="mf">4.8</span><span class="p">,</span>
+        <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;55-inch display&quot;</span><span class="p">,</span> <span class="s2">&quot;4K resolution&quot;</span><span class="p">,</span> <span class="s2">&quot;HDR&quot;</span><span class="p">,</span> <span class="s2">&quot;Smart TV&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A stunning 4K TV with vibrant colors and smart features.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;price&quot;</span><span class="p">:</span> <span class="mf">599.99</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;SoundMax Home Theater&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;SoundMax Home Theater&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;category&quot;</span><span class="p">:</span> <span class="s2">&quot;Televisions and Home Theater Systems&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;brand&quot;</span><span class="p">:</span> <span class="s2">&quot;SoundMax&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;model_number&quot;</span><span class="p">:</span> <span class="s2">&quot;SM-HT100&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;warranty&quot;</span><span class="p">:</span> <span class="s2">&quot;1 year&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;rating&quot;</span><span class="p">:</span> <span class="mf">4.4</span><span class="p">,</span>
+        <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;5.1 channel&quot;</span><span class="p">,</span> <span class="s2">&quot;1000W output&quot;</span><span class="p">,</span> <span class="s2">&quot;Wireless subwoofer&quot;</span><span class="p">,</span> <span class="s2">&quot;Bluetooth&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A powerful home theater system for an immersive audio experience.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;price&quot;</span><span class="p">:</span> <span class="mf">399.99</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;CineView 8K TV&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;CineView 8K TV&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;category&quot;</span><span class="p">:</span> <span class="s2">&quot;Televisions and Home Theater Systems&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;brand&quot;</span><span class="p">:</span> <span class="s2">&quot;CineView&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;model_number&quot;</span><span class="p">:</span> <span class="s2">&quot;CV-8K65&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;warranty&quot;</span><span class="p">:</span> <span class="s2">&quot;2 years&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;rating&quot;</span><span class="p">:</span> <span class="mf">4.9</span><span class="p">,</span>
+        <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;65-inch display&quot;</span><span class="p">,</span> <span class="s2">&quot;8K resolution&quot;</span><span class="p">,</span> <span class="s2">&quot;HDR&quot;</span><span class="p">,</span> <span class="s2">&quot;Smart TV&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Experience the future of television with this stunning 8K TV.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;price&quot;</span><span class="p">:</span> <span class="mf">2999.99</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;SoundMax Soundbar&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;SoundMax Soundbar&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;category&quot;</span><span class="p">:</span> <span class="s2">&quot;Televisions and Home Theater Systems&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;brand&quot;</span><span class="p">:</span> <span class="s2">&quot;SoundMax&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;model_number&quot;</span><span class="p">:</span> <span class="s2">&quot;SM-SB50&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;warranty&quot;</span><span class="p">:</span> <span class="s2">&quot;1 year&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;rating&quot;</span><span class="p">:</span> <span class="mf">4.3</span><span class="p">,</span>
+        <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;2.1 channel&quot;</span><span class="p">,</span> <span class="s2">&quot;300W output&quot;</span><span class="p">,</span> <span class="s2">&quot;Wireless subwoofer&quot;</span><span class="p">,</span> <span class="s2">&quot;Bluetooth&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Upgrade your TV&#39;s audio with this sleek and powerful soundbar.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;price&quot;</span><span class="p">:</span> <span class="mf">199.99</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;CineView OLED TV&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;CineView OLED TV&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;category&quot;</span><span class="p">:</span> <span class="s2">&quot;Televisions and Home Theater Systems&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;brand&quot;</span><span class="p">:</span> <span class="s2">&quot;CineView&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;model_number&quot;</span><span class="p">:</span> <span class="s2">&quot;CV-OLED55&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;warranty&quot;</span><span class="p">:</span> <span class="s2">&quot;2 years&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;rating&quot;</span><span class="p">:</span> <span class="mf">4.7</span><span class="p">,</span>
+        <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;55-inch display&quot;</span><span class="p">,</span> <span class="s2">&quot;4K resolution&quot;</span><span class="p">,</span> <span class="s2">&quot;HDR&quot;</span><span class="p">,</span> <span class="s2">&quot;Smart TV&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Experience true blacks and vibrant colors with this OLED TV.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;price&quot;</span><span class="p">:</span> <span class="mf">1499.99</span>
+    <span class="p">},</span>
+
+    <span class="s2">&quot;GameSphere X&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;GameSphere X&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;category&quot;</span><span class="p">:</span> <span class="s2">&quot;Gaming Consoles and Accessories&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;brand&quot;</span><span class="p">:</span> <span class="s2">&quot;GameSphere&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;model_number&quot;</span><span class="p">:</span> <span class="s2">&quot;GS-X&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;warranty&quot;</span><span class="p">:</span> <span class="s2">&quot;1 year&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;rating&quot;</span><span class="p">:</span> <span class="mf">4.9</span><span class="p">,</span>
+        <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;4K gaming&quot;</span><span class="p">,</span> <span class="s2">&quot;1TB storage&quot;</span><span class="p">,</span> <span class="s2">&quot;Backward compatibility&quot;</span><span class="p">,</span> <span class="s2">&quot;Online multiplayer&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A next-generation gaming console for the ultimate gaming experience.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;price&quot;</span><span class="p">:</span> <span class="mf">499.99</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;ProGamer Controller&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;ProGamer Controller&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;category&quot;</span><span class="p">:</span> <span class="s2">&quot;Gaming Consoles and Accessories&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;brand&quot;</span><span class="p">:</span> <span class="s2">&quot;ProGamer&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;model_number&quot;</span><span class="p">:</span> <span class="s2">&quot;PG-C100&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;warranty&quot;</span><span class="p">:</span> <span class="s2">&quot;1 year&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;rating&quot;</span><span class="p">:</span> <span class="mf">4.2</span><span class="p">,</span>
+        <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Ergonomic design&quot;</span><span class="p">,</span> <span class="s2">&quot;Customizable buttons&quot;</span><span class="p">,</span> <span class="s2">&quot;Wireless&quot;</span><span class="p">,</span> <span class="s2">&quot;Rechargeable battery&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A high-quality gaming controller for precision and comfort.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;price&quot;</span><span class="p">:</span> <span class="mf">59.99</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;GameSphere Y&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;GameSphere Y&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;category&quot;</span><span class="p">:</span> <span class="s2">&quot;Gaming Consoles and Accessories&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;brand&quot;</span><span class="p">:</span> <span class="s2">&quot;GameSphere&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;model_number&quot;</span><span class="p">:</span> <span class="s2">&quot;GS-Y&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;warranty&quot;</span><span class="p">:</span> <span class="s2">&quot;1 year&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;rating&quot;</span><span class="p">:</span> <span class="mf">4.8</span><span class="p">,</span>
+        <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;4K gaming&quot;</span><span class="p">,</span> <span class="s2">&quot;500GB storage&quot;</span><span class="p">,</span> <span class="s2">&quot;Backward compatibility&quot;</span><span class="p">,</span> <span class="s2">&quot;Online multiplayer&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A compact gaming console with powerful performance.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;price&quot;</span><span class="p">:</span> <span class="mf">399.99</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;ProGamer Racing Wheel&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;ProGamer Racing Wheel&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;category&quot;</span><span class="p">:</span> <span class="s2">&quot;Gaming Consoles and Accessories&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;brand&quot;</span><span class="p">:</span> <span class="s2">&quot;ProGamer&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;model_number&quot;</span><span class="p">:</span> <span class="s2">&quot;PG-RW200&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;warranty&quot;</span><span class="p">:</span> <span class="s2">&quot;1 year&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;rating&quot;</span><span class="p">:</span> <span class="mf">4.5</span><span class="p">,</span>
+        <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Force feedback&quot;</span><span class="p">,</span> <span class="s2">&quot;Adjustable pedals&quot;</span><span class="p">,</span> <span class="s2">&quot;Paddle shifters&quot;</span><span class="p">,</span> <span class="s2">&quot;Compatible with GameSphere X&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Enhance your racing games with this realistic racing wheel.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;price&quot;</span><span class="p">:</span> <span class="mf">249.99</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;GameSphere VR Headset&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;GameSphere VR Headset&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;category&quot;</span><span class="p">:</span> <span class="s2">&quot;Gaming Consoles and Accessories&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;brand&quot;</span><span class="p">:</span> <span class="s2">&quot;GameSphere&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;model_number&quot;</span><span class="p">:</span> <span class="s2">&quot;GS-VR&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;warranty&quot;</span><span class="p">:</span> <span class="s2">&quot;1 year&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;rating&quot;</span><span class="p">:</span> <span class="mf">4.6</span><span class="p">,</span>
+        <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Immersive VR experience&quot;</span><span class="p">,</span> <span class="s2">&quot;Built-in headphones&quot;</span><span class="p">,</span> <span class="s2">&quot;Adjustable headband&quot;</span><span class="p">,</span> <span class="s2">&quot;Compatible with GameSphere X&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Step into the world of virtual reality with this comfortable VR headset.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;price&quot;</span><span class="p">:</span> <span class="mf">299.99</span>
+    <span class="p">},</span>
+
+    <span class="s2">&quot;AudioPhonic Noise-Canceling Headphones&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;AudioPhonic Noise-Canceling Headphones&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;category&quot;</span><span class="p">:</span> <span class="s2">&quot;Audio Equipment&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;brand&quot;</span><span class="p">:</span> <span class="s2">&quot;AudioPhonic&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;model_number&quot;</span><span class="p">:</span> <span class="s2">&quot;AP-NC100&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;warranty&quot;</span><span class="p">:</span> <span class="s2">&quot;1 year&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;rating&quot;</span><span class="p">:</span> <span class="mf">4.6</span><span class="p">,</span>
+        <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Active noise-canceling&quot;</span><span class="p">,</span> <span class="s2">&quot;Bluetooth&quot;</span><span class="p">,</span> <span class="s2">&quot;20-hour battery life&quot;</span><span class="p">,</span> <span class="s2">&quot;Comfortable fit&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Experience immersive sound with these noise-canceling headphones.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;price&quot;</span><span class="p">:</span> <span class="mf">199.99</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;WaveSound Bluetooth Speaker&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;WaveSound Bluetooth Speaker&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;category&quot;</span><span class="p">:</span> <span class="s2">&quot;Audio Equipment&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;brand&quot;</span><span class="p">:</span> <span class="s2">&quot;WaveSound&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;model_number&quot;</span><span class="p">:</span> <span class="s2">&quot;WS-BS50&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;warranty&quot;</span><span class="p">:</span> <span class="s2">&quot;1 year&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;rating&quot;</span><span class="p">:</span> <span class="mf">4.5</span><span class="p">,</span>
+        <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Portable&quot;</span><span class="p">,</span> <span class="s2">&quot;10-hour battery life&quot;</span><span class="p">,</span> <span class="s2">&quot;Water-resistant&quot;</span><span class="p">,</span> <span class="s2">&quot;Built-in microphone&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A compact and versatile Bluetooth speaker for music on the go.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;price&quot;</span><span class="p">:</span> <span class="mf">49.99</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;AudioPhonic True Wireless Earbuds&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;AudioPhonic True Wireless Earbuds&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;category&quot;</span><span class="p">:</span> <span class="s2">&quot;Audio Equipment&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;brand&quot;</span><span class="p">:</span> <span class="s2">&quot;AudioPhonic&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;model_number&quot;</span><span class="p">:</span> <span class="s2">&quot;AP-TW20&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;warranty&quot;</span><span class="p">:</span> <span class="s2">&quot;1 year&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;rating&quot;</span><span class="p">:</span> <span class="mf">4.4</span><span class="p">,</span>
+        <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;True wireless&quot;</span><span class="p">,</span> <span class="s2">&quot;Bluetooth 5.0&quot;</span><span class="p">,</span> <span class="s2">&quot;Touch controls&quot;</span><span class="p">,</span> <span class="s2">&quot;18-hour battery life&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Enjoy music without wires with these comfortable true wireless earbuds.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;price&quot;</span><span class="p">:</span> <span class="mf">79.99</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;WaveSound Soundbar&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;WaveSound Soundbar&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;category&quot;</span><span class="p">:</span> <span class="s2">&quot;Audio Equipment&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;brand&quot;</span><span class="p">:</span> <span class="s2">&quot;WaveSound&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;model_number&quot;</span><span class="p">:</span> <span class="s2">&quot;WS-SB40&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;warranty&quot;</span><span class="p">:</span> <span class="s2">&quot;1 year&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;rating&quot;</span><span class="p">:</span> <span class="mf">4.3</span><span class="p">,</span>
+        <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;2.0 channel&quot;</span><span class="p">,</span> <span class="s2">&quot;80W output&quot;</span><span class="p">,</span> <span class="s2">&quot;Bluetooth&quot;</span><span class="p">,</span> <span class="s2">&quot;Wall-mountable&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Upgrade your TV&#39;s audio with this slim and powerful soundbar.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;price&quot;</span><span class="p">:</span> <span class="mf">99.99</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;AudioPhonic Turntable&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;AudioPhonic Turntable&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;category&quot;</span><span class="p">:</span> <span class="s2">&quot;Audio Equipment&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;brand&quot;</span><span class="p">:</span> <span class="s2">&quot;AudioPhonic&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;model_number&quot;</span><span class="p">:</span> <span class="s2">&quot;AP-TT10&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;warranty&quot;</span><span class="p">:</span> <span class="s2">&quot;1 year&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;rating&quot;</span><span class="p">:</span> <span class="mf">4.2</span><span class="p">,</span>
+        <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;3-speed&quot;</span><span class="p">,</span> <span class="s2">&quot;Built-in speakers&quot;</span><span class="p">,</span> <span class="s2">&quot;Bluetooth&quot;</span><span class="p">,</span> <span class="s2">&quot;USB recording&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Rediscover your vinyl collection with this modern turntable.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;price&quot;</span><span class="p">:</span> <span class="mf">149.99</span>
+    <span class="p">},</span>
+
+    <span class="s2">&quot;FotoSnap DSLR Camera&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;FotoSnap DSLR Camera&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;category&quot;</span><span class="p">:</span> <span class="s2">&quot;Cameras and Camcorders&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;brand&quot;</span><span class="p">:</span> <span class="s2">&quot;FotoSnap&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;model_number&quot;</span><span class="p">:</span> <span class="s2">&quot;FS-DSLR200&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;warranty&quot;</span><span class="p">:</span> <span class="s2">&quot;1 year&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;rating&quot;</span><span class="p">:</span> <span class="mf">4.7</span><span class="p">,</span>
+        <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;24.2MP sensor&quot;</span><span class="p">,</span> <span class="s2">&quot;1080p video&quot;</span><span class="p">,</span> <span class="s2">&quot;3-inch LCD&quot;</span><span class="p">,</span> <span class="s2">&quot;Interchangeable lenses&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Capture stunning photos and videos with this versatile DSLR camera.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;price&quot;</span><span class="p">:</span> <span class="mf">599.99</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;ActionCam 4K&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;ActionCam 4K&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;category&quot;</span><span class="p">:</span> <span class="s2">&quot;Cameras and Camcorders&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;brand&quot;</span><span class="p">:</span> <span class="s2">&quot;ActionCam&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;model_number&quot;</span><span class="p">:</span> <span class="s2">&quot;AC-4K&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;warranty&quot;</span><span class="p">:</span> <span class="s2">&quot;1 year&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;rating&quot;</span><span class="p">:</span> <span class="mf">4.4</span><span class="p">,</span>
+        <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;4K video&quot;</span><span class="p">,</span> <span class="s2">&quot;Waterproof&quot;</span><span class="p">,</span> <span class="s2">&quot;Image stabilization&quot;</span><span class="p">,</span> <span class="s2">&quot;Wi-Fi&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Record your adventures with this rugged and compact 4K action camera.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;price&quot;</span><span class="p">:</span> <span class="mf">299.99</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;FotoSnap Mirrorless Camera&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;FotoSnap Mirrorless Camera&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;category&quot;</span><span class="p">:</span> <span class="s2">&quot;Cameras and Camcorders&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;brand&quot;</span><span class="p">:</span> <span class="s2">&quot;FotoSnap&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;model_number&quot;</span><span class="p">:</span> <span class="s2">&quot;FS-ML100&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;warranty&quot;</span><span class="p">:</span> <span class="s2">&quot;1 year&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;rating&quot;</span><span class="p">:</span> <span class="mf">4.6</span><span class="p">,</span>
+        <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;20.1MP sensor&quot;</span><span class="p">,</span> <span class="s2">&quot;4K video&quot;</span><span class="p">,</span> <span class="s2">&quot;3-inch touchscreen&quot;</span><span class="p">,</span> <span class="s2">&quot;Interchangeable lenses&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A compact and lightweight mirrorless camera with advanced features.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;price&quot;</span><span class="p">:</span> <span class="mf">799.99</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;ZoomMaster Camcorder&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;ZoomMaster Camcorder&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;category&quot;</span><span class="p">:</span> <span class="s2">&quot;Cameras and Camcorders&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;brand&quot;</span><span class="p">:</span> <span class="s2">&quot;ZoomMaster&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;model_number&quot;</span><span class="p">:</span> <span class="s2">&quot;ZM-CM50&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;warranty&quot;</span><span class="p">:</span> <span class="s2">&quot;1 year&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;rating&quot;</span><span class="p">:</span> <span class="mf">4.3</span><span class="p">,</span>
+        <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;1080p video&quot;</span><span class="p">,</span> <span class="s2">&quot;30x optical zoom&quot;</span><span class="p">,</span> <span class="s2">&quot;3-inch LCD&quot;</span><span class="p">,</span> <span class="s2">&quot;Image stabilization&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Capture life&#39;s moments with this easy-to-use camcorder.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;price&quot;</span><span class="p">:</span> <span class="mf">249.99</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;FotoSnap Instant Camera&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;FotoSnap Instant Camera&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;category&quot;</span><span class="p">:</span> <span class="s2">&quot;Cameras and Camcorders&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;brand&quot;</span><span class="p">:</span> <span class="s2">&quot;FotoSnap&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;model_number&quot;</span><span class="p">:</span> <span class="s2">&quot;FS-IC10&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;warranty&quot;</span><span class="p">:</span> <span class="s2">&quot;1 year&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;rating&quot;</span><span class="p">:</span> <span class="mf">4.1</span><span class="p">,</span>
+        <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Instant prints&quot;</span><span class="p">,</span> <span class="s2">&quot;Built-in flash&quot;</span><span class="p">,</span> <span class="s2">&quot;Selfie mirror&quot;</span><span class="p">,</span> <span class="s2">&quot;Battery-powered&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Create instant memories with this fun and portable instant camera.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;price&quot;</span><span class="p">:</span> <span class="mf">69.99</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_product_by_name</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">products</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">get_products_by_category</span><span class="p">(</span><span class="n">category</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">product</span> <span class="k">for</span> <span class="n">product</span> <span class="ow">in</span> <span class="n">products</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="k">if</span> <span class="n">product</span><span class="p">[</span><span class="s2">&quot;category&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">category</span><span class="p">]</span>
+</code></pre></div>
+
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">get_product_by_name</span><span class="p">(</span><span class="s2">&quot;TechPro Ultrabook&quot;</span><span class="p">))</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>{&#39;name&#39;: &#39;TechPro Ultrabook&#39;, &#39;category&#39;: &#39;Computers and Laptops&#39;, &#39;brand&#39;: &#39;TechPro&#39;, &#39;model_number&#39;: &#39;TP-UB100&#39;, &#39;warranty&#39;: &#39;1 year&#39;, &#39;rating&#39;: 4.5, &#39;features&#39;: [&#39;13.3-inch display&#39;, &#39;8GB RAM&#39;, &#39;256GB SSD&#39;, &#39;Intel Core i5 processor&#39;], &#39;description&#39;: &#39;A sleek and lightweight ultrabook for everyday use.&#39;, &#39;price&#39;: 799.99}
+</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">get_products_by_category</span><span class="p">(</span><span class="s2">&quot;Computers and Laptops&quot;</span><span class="p">))</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>[{&#39;name&#39;: &#39;TechPro Ultrabook&#39;, &#39;category&#39;: &#39;Computers and Laptops&#39;, &#39;brand&#39;: &#39;TechPro&#39;, &#39;model_number&#39;: &#39;TP-UB100&#39;, &#39;warranty&#39;: &#39;1 year&#39;, &#39;rating&#39;: 4.5, &#39;features&#39;: [&#39;13.3-inch display&#39;, &#39;8GB RAM&#39;, &#39;256GB SSD&#39;, &#39;Intel Core i5 processor&#39;], &#39;description&#39;: &#39;A sleek and lightweight ultrabook for everyday use.&#39;, &#39;price&#39;: 799.99}, {&#39;name&#39;: &#39;BlueWave Gaming Laptop&#39;, &#39;category&#39;: &#39;Computers and Laptops&#39;, &#39;brand&#39;: &#39;BlueWave&#39;, &#39;model_number&#39;: &#39;BW-GL200&#39;, &#39;warranty&#39;: &#39;2 years&#39;, &#39;rating&#39;: 4.7, &#39;features&#39;: [&#39;15.6-inch display&#39;, &#39;16GB RAM&#39;, &#39;512GB SSD&#39;, &#39;NVIDIA GeForce RTX 3060&#39;], &#39;description&#39;: &#39;A high-performance gaming laptop for an immersive experience.&#39;, &#39;price&#39;: 1199.99}, {&#39;name&#39;: &#39;PowerLite Convertible&#39;, &#39;category&#39;: &#39;Computers and Laptops&#39;, &#39;brand&#39;: &#39;PowerLite&#39;, &#39;model_number&#39;: &#39;PL-CV300&#39;, &#39;warranty&#39;: &#39;1 year&#39;, &#39;rating&#39;: 4.3, &#39;features&#39;: [&#39;14-inch touchscreen&#39;, &#39;8GB RAM&#39;, &#39;256GB SSD&#39;, &#39;360-degree hinge&#39;], &#39;description&#39;: &#39;A versatile convertible laptop with a responsive touchscreen.&#39;, &#39;price&#39;: 699.99}, {&#39;name&#39;: &#39;TechPro Desktop&#39;, &#39;category&#39;: &#39;Computers and Laptops&#39;, &#39;brand&#39;: &#39;TechPro&#39;, &#39;model_number&#39;: &#39;TP-DT500&#39;, &#39;warranty&#39;: &#39;1 year&#39;, &#39;rating&#39;: 4.4, &#39;features&#39;: [&#39;Intel Core i7 processor&#39;, &#39;16GB RAM&#39;, &#39;1TB HDD&#39;, &#39;NVIDIA GeForce GTX 1660&#39;], &#39;description&#39;: &#39;A powerful desktop computer for work and play.&#39;, &#39;price&#39;: 999.99}, {&#39;name&#39;: &#39;BlueWave Chromebook&#39;, &#39;category&#39;: &#39;Computers and Laptops&#39;, &#39;brand&#39;: &#39;BlueWave&#39;, &#39;model_number&#39;: &#39;BW-CB100&#39;, &#39;warranty&#39;: &#39;1 year&#39;, &#39;rating&#39;: 4.1, &#39;features&#39;: [&#39;11.6-inch display&#39;, &#39;4GB RAM&#39;, &#39;32GB eMMC&#39;, &#39;Chrome OS&#39;], &#39;description&#39;: &#39;A compact and affordable Chromebook for everyday tasks.&#39;, &#39;price&#39;: 249.99}]
+</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">user_message_1</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>
+ tell me about the smartx pro phone and  the fotosnap camera, the dslr one.  Also tell me about your tvs 
+</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">category_and_product_response_1</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>[
+    {&#39;category&#39;: &#39;Smartphones and Accessories&#39;, &#39;products&#39;: [&#39;SmartX ProPhone&#39;]},
+    {&#39;category&#39;: &#39;Cameras and Camcorders&#39;, &#39;products&#39;: [&#39;FotoSnap DSLR Camera&#39;]},
+    {&#39;category&#39;: &#39;Televisions and Home Theater Systems&#39;}
+]
+</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="read-python-string-into-python-list-of-dictionaries">Read Python string into Python list of dictionaries</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">json</span> 
+
+<span class="k">def</span> <span class="nf">read_string_to_list</span><span class="p">(</span><span class="n">input_string</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">input_string</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">input_string</span> <span class="o">=</span> <span class="n">input_string</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># Replace single quotes with double quotes for valid JSON</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">input_string</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">data</span>
+    <span class="k">except</span> <span class="n">json</span><span class="o">.</span><span class="n">JSONDecodeError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: Invalid JSON string&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>   
+</code></pre></div>
+
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="n">category_and_product_list</span> <span class="o">=</span> <span class="n">read_string_to_list</span><span class="p">(</span><span class="n">category_and_product_response_1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">category_and_product_list</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>[{&#39;category&#39;: &#39;Smartphones and Accessories&#39;, &#39;products&#39;: [&#39;SmartX ProPhone&#39;]}, {&#39;category&#39;: &#39;Cameras and Camcorders&#39;, &#39;products&#39;: [&#39;FotoSnap DSLR Camera&#39;]}, {&#39;category&#39;: &#39;Televisions and Home Theater Systems&#39;}]
+</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="retrieve-detailed-product-information-for-the-relevant-products-and-categories">Retrieve detailed product information for the relevant products and categories</h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">generate_output_string</span><span class="p">(</span><span class="n">data_list</span><span class="p">):</span>
+    <span class="n">output_string</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">data_list</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">output_string</span>
+
+    <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">data_list</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s2">&quot;products&quot;</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+                <span class="n">products_list</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;products&quot;</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">product_name</span> <span class="ow">in</span> <span class="n">products_list</span><span class="p">:</span>
+                    <span class="n">product</span> <span class="o">=</span> <span class="n">get_product_by_name</span><span class="p">(</span><span class="n">product_name</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">product</span><span class="p">:</span>
+                        <span class="n">output_string</span> <span class="o">+=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">product</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: Product &#39;</span><span class="si">{</span><span class="n">product_name</span><span class="si">}</span><span class="s2">&#39; not found&quot;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="s2">&quot;category&quot;</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+                <span class="n">category_name</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;category&quot;</span><span class="p">]</span>
+                <span class="n">category_products</span> <span class="o">=</span> <span class="n">get_products_by_category</span><span class="p">(</span><span class="n">category_name</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">product</span> <span class="ow">in</span> <span class="n">category_products</span><span class="p">:</span>
+                    <span class="n">output_string</span> <span class="o">+=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">product</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: Invalid object format&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">output_string</span> 
+</code></pre></div>
+
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="n">product_information_for_user_message_1</span> <span class="o">=</span> <span class="n">generate_output_string</span><span class="p">(</span><span class="n">category_and_product_list</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">product_information_for_user_message_1</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>{
+    &#34;name&#34;: &#34;SmartX ProPhone&#34;,
+    &#34;category&#34;: &#34;Smartphones and Accessories&#34;,
+    &#34;brand&#34;: &#34;SmartX&#34;,
+    &#34;model_number&#34;: &#34;SX-PP10&#34;,
+    &#34;warranty&#34;: &#34;1 year&#34;,
+    &#34;rating&#34;: 4.6,
+    &#34;features&#34;: [
+        &#34;6.1-inch display&#34;,
+        &#34;128GB storage&#34;,
+        &#34;12MP dual camera&#34;,
+        &#34;5G&#34;
+    ],
+    &#34;description&#34;: &#34;A powerful smartphone with advanced camera features.&#34;,
+    &#34;price&#34;: 899.99
+}
+{
+    &#34;name&#34;: &#34;FotoSnap DSLR Camera&#34;,
+    &#34;category&#34;: &#34;Cameras and Camcorders&#34;,
+    &#34;brand&#34;: &#34;FotoSnap&#34;,
+    &#34;model_number&#34;: &#34;FS-DSLR200&#34;,
+    &#34;warranty&#34;: &#34;1 year&#34;,
+    &#34;rating&#34;: 4.7,
+    &#34;features&#34;: [
+        &#34;24.2MP sensor&#34;,
+        &#34;1080p video&#34;,
+        &#34;3-inch LCD&#34;,
+        &#34;Interchangeable lenses&#34;
+    ],
+    &#34;description&#34;: &#34;Capture stunning photos and videos with this versatile DSLR camera.&#34;,
+    &#34;price&#34;: 599.99
+}
+{
+    &#34;name&#34;: &#34;CineView 4K TV&#34;,
+    &#34;category&#34;: &#34;Televisions and Home Theater Systems&#34;,
+    &#34;brand&#34;: &#34;CineView&#34;,
+    &#34;model_number&#34;: &#34;CV-4K55&#34;,
+    &#34;warranty&#34;: &#34;2 years&#34;,
+    &#34;rating&#34;: 4.8,
+    &#34;features&#34;: [
+        &#34;55-inch display&#34;,
+        &#34;4K resolution&#34;,
+        &#34;HDR&#34;,
+        &#34;Smart TV&#34;
+    ],
+    &#34;description&#34;: &#34;A stunning 4K TV with vibrant colors and smart features.&#34;,
+    &#34;price&#34;: 599.99
+}
+{
+    &#34;name&#34;: &#34;SoundMax Home Theater&#34;,
+    &#34;category&#34;: &#34;Televisions and Home Theater Systems&#34;,
+    &#34;brand&#34;: &#34;SoundMax&#34;,
+    &#34;model_number&#34;: &#34;SM-HT100&#34;,
+    &#34;warranty&#34;: &#34;1 year&#34;,
+    &#34;rating&#34;: 4.4,
+    &#34;features&#34;: [
+        &#34;5.1 channel&#34;,
+        &#34;1000W output&#34;,
+        &#34;Wireless subwoofer&#34;,
+        &#34;Bluetooth&#34;
+    ],
+    &#34;description&#34;: &#34;A powerful home theater system for an immersive audio experience.&#34;,
+    &#34;price&#34;: 399.99
+}
+{
+    &#34;name&#34;: &#34;CineView 8K TV&#34;,
+    &#34;category&#34;: &#34;Televisions and Home Theater Systems&#34;,
+    &#34;brand&#34;: &#34;CineView&#34;,
+    &#34;model_number&#34;: &#34;CV-8K65&#34;,
+    &#34;warranty&#34;: &#34;2 years&#34;,
+    &#34;rating&#34;: 4.9,
+    &#34;features&#34;: [
+        &#34;65-inch display&#34;,
+        &#34;8K resolution&#34;,
+        &#34;HDR&#34;,
+        &#34;Smart TV&#34;
+    ],
+    &#34;description&#34;: &#34;Experience the future of television with this stunning 8K TV.&#34;,
+    &#34;price&#34;: 2999.99
+}
+{
+    &#34;name&#34;: &#34;SoundMax Soundbar&#34;,
+    &#34;category&#34;: &#34;Televisions and Home Theater Systems&#34;,
+    &#34;brand&#34;: &#34;SoundMax&#34;,
+    &#34;model_number&#34;: &#34;SM-SB50&#34;,
+    &#34;warranty&#34;: &#34;1 year&#34;,
+    &#34;rating&#34;: 4.3,
+    &#34;features&#34;: [
+        &#34;2.1 channel&#34;,
+        &#34;300W output&#34;,
+        &#34;Wireless subwoofer&#34;,
+        &#34;Bluetooth&#34;
+    ],
+    &#34;description&#34;: &#34;Upgrade your TV&#39;s audio with this sleek and powerful soundbar.&#34;,
+    &#34;price&#34;: 199.99
+}
+{
+    &#34;name&#34;: &#34;CineView OLED TV&#34;,
+    &#34;category&#34;: &#34;Televisions and Home Theater Systems&#34;,
+    &#34;brand&#34;: &#34;CineView&#34;,
+    &#34;model_number&#34;: &#34;CV-OLED55&#34;,
+    &#34;warranty&#34;: &#34;2 years&#34;,
+    &#34;rating&#34;: 4.7,
+    &#34;features&#34;: [
+        &#34;55-inch display&#34;,
+        &#34;4K resolution&#34;,
+        &#34;HDR&#34;,
+        &#34;Smart TV&#34;
+    ],
+    &#34;description&#34;: &#34;Experience true blacks and vibrant colors with this OLED TV.&#34;,
+    &#34;price&#34;: 1499.99
+}
+
+</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="generate-answer-to-user-query-based-on-detailed-product-information">Generate answer to user query based on detailed product information</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="n">system_message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">You are a customer service assistant for a </span><span class="se">\</span>
+<span class="s2">large electronic store. </span><span class="se">\</span>
+<span class="s2">Respond in a friendly and helpful tone, </span><span class="se">\</span>
+<span class="s2">with very concise answers. </span><span class="se">\</span>
+<span class="s2">Make sure to ask the user relevant follow up questions.</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">user_message_1</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">tell me about the smartx pro phone and </span><span class="se">\</span>
+<span class="s2">the fotosnap camera, the dslr one. </span><span class="se">\</span>
+<span class="s2">Also tell me about your tvs&quot;&quot;&quot;</span>
+<span class="n">messages</span> <span class="o">=</span>  <span class="p">[</span>  
+<span class="p">{</span><span class="s1">&#39;role&#39;</span><span class="p">:</span><span class="s1">&#39;system&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;content&#39;</span><span class="p">:</span> <span class="n">system_message</span><span class="p">},</span>   
+<span class="p">{</span><span class="s1">&#39;role&#39;</span><span class="p">:</span><span class="s1">&#39;user&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;content&#39;</span><span class="p">:</span> <span class="n">user_message_1</span><span class="p">},</span>  
+<span class="p">{</span><span class="s1">&#39;role&#39;</span><span class="p">:</span><span class="s1">&#39;assistant&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;content&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;Relevant product information:</span><span class="se">\n\</span>
+<span class="s2"> </span><span class="si">{</span><span class="n">product_information_for_user_message_1</span><span class="si">}</span><span class="s2">&quot;&quot;&quot;</span><span class="p">},</span>   
+<span class="p">]</span>
+<span class="n">final_response</span> <span class="o">=</span> <span class="n">get_completion_from_messages</span><span class="p">(</span><span class="n">messages</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">final_response</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>The SmartX ProPhone has a 6.1-inch display, 128GB storage, 12MP dual camera, and 5G. The FotoSnap DSLR Camera has a 24.2MP sensor, 1080p video, 3-inch LCD, and interchangeable lenses. We have a variety of TVs, including the CineView 4K TV with a 55-inch display, 4K resolution, HDR, and smart TV features. We also have the SoundMax Home Theater system with 5.1 channel, 1000W output, wireless subwoofer, and Bluetooth. Do you have any specific questions about these products or any other products we offer?
+</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code>
+</code></pre></div>
+
+</div>
+</div>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            Back to top
+          </button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/hari31416" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/in/hari31416" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://twitter.com/hari31416" target="_blank" rel="noopener" title="twitter.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.kaggle.com/hari31416" target="_blank" rel="noopener" title="www.kaggle.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M304.2 501.5 158.4 320.3 298.2 185c2.6-2.7 1.7-10.5-5.3-10.5h-69.2c-3.5 0-7 1.8-10.5 5.3L80.9 313.5V7.5q0-7.5-7.5-7.5H21.5Q14 0 14 7.5v497q0 7.5 7.5 7.5h51.9q7.5 0 7.5-7.5v-109l30.8-29.3 110.5 140.6c3 3.5 6.5 5.3 10.5 5.3h66.9q5.25 0 6-3z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.instagram.com/hari31416" target="_blank" rel="noopener" title="www.instagram.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.instant", "navigation.top", "toc.integrate"], "search": "../../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.b4d07000.min.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
